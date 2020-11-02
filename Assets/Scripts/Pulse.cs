@@ -1,0 +1,31 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class Pulse : MonoBehaviour
+{
+    public Vector3 amp;
+    public Vector3 freq;
+    public Vector3 offset;
+    [HideInInspector]public Vector3 scale;
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        scale = transform.localScale;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        transform.localScale = new Vector3(
+            scale.x + PulseFunc(Time.time, freq.x, amp.x, offset.x),
+            scale.y + PulseFunc(Time.time, freq.y, amp.y, offset.y), 
+            scale.z + PulseFunc(Time.time, freq.z, amp.z, offset.z));
+    }
+
+    protected static float PulseFunc(float time, float freq, float amp, float offset)
+    {
+        return (amp * (1 + Mathf.Sin(((1f * Mathf.PI * freq * time) + offset))));
+    }
+}
