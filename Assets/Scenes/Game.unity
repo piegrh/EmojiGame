@@ -8599,6 +8599,7 @@ MonoBehaviour:
   gamePanel: {fileID: 1239468358}
   cellPrefab: {fileID: 295455890453431376, guid: ee147dd4063f7cd4891c5a5ebb53a002,
     type: 3}
+  padding: {x: 10, y: 10}
 --- !u!4 &1520680215
 Transform:
   m_ObjectHideFlags: 0

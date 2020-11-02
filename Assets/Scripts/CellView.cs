@@ -10,11 +10,14 @@ namespace Emojigame
         protected RectTransform _transform;
         protected Color enableColor;
         protected Color disableColor;
+        protected Roll roller;
 
         public void Awake()
         {
             _transform = GetComponent<RectTransform>();
-            img = GetComponent<UnityEngine.UI.Image>();
+            img = img ?? GetComponentInChildren<UnityEngine.UI.Image>();
+            roller = roller ?? img.GetComponent<Roll>();
+            roller.enabled = false;
             SetSpriteColors(new Color(img.color.r, img.color.g, img.color.b, 1f), new Color(img.color.r, img.color.g, img.color.b, 0f));
         }
 
@@ -33,12 +36,8 @@ namespace Emojigame
 
         public void Update()
         {
-            if (cell == null) return;
-
-            if (cell.seleted)
-                _transform.rotation = Quaternion.Euler(0, 0, 45f * Mathf.Sin(Time.time * 10f));
-            else
-                _transform.rotation = Quaternion.identity;
+            if(cell.seleted && !roller.enabled || (!cell.seleted && roller.enabled))
+                roller.enabled = !roller.enabled;
         }
 
         public void SetSprite(Sprite sprite)
@@ -71,6 +70,12 @@ namespace Emojigame
         public void SetPosition(Vector3 pos)
         {
             _transform.localPosition = pos;
+        }
+
+        public void SetPadding(Vector2 padding)
+        {
+            padding = new Vector2(Mathf.Abs(padding.x), Mathf.Abs(padding.y));
+            img.GetComponent<RectTransform>().sizeDelta = _transform.sizeDelta - padding;
         }
 
         public RectTransform RectTransofrm { get { return _transform; } }

@@ -11,6 +11,7 @@ namespace Emojigame
         protected GameState state;
         public GameObject gamePanel;
         public GameObject cellPrefab;
+        public Vector2 padding = new Vector2(0, 0);
         public Sprite[] Sprites { get; protected set; }
         CellMap _map;
         Cell selected;
@@ -39,19 +40,22 @@ namespace Emojigame
 
             Vector2 levelSize = gamePanel.GetComponent<RectTransform>().sizeDelta;
 
-            cellPrefab.GetComponent<RectTransform>().sizeDelta = cellSize;
-
             _map = new CellMap(levelSize, cellSize);
+
+            cellPrefab.GetComponent<RectTransform>().sizeDelta = cellSize;
 
             Sprites = new Sprite[2+(int)settings.difficulty];
             Transform tParent = gamePanel.transform;
             CellView cv;
+
+
 
             for (int y = 0; y < _map.LengthY; y++)
             {
                 for (int x = 0; x < _map.LengthX; x++)
                 {
                     cv = Instantiate(cellPrefab, tParent).GetComponent<CellView>();
+                    cv.SetPadding(padding);
                     cv.cell = _map.GetCell(x, y);
                     cv.name = string.Format("({0},{1})",x,y);
                     cells.Add(cv.cell, cv);
@@ -135,12 +139,19 @@ namespace Emojigame
         {
             // Draw lines
             CellMapExplorer explorer = new CellMapExplorer(_map, c);
-            LineRenderer[] lines = PathRenderer.Render(explorer.path);
+            List<LineRenderer> lines = new List<LineRenderer>();
+
+            foreach (KeyValuePair<Cell, Cell> visited in explorer.path)
+            {
+                Vector3 a = GetView(visited.Key).RectTransofrm.position;
+                Vector3 b = GetView(visited.Value).RectTransofrm.position;
+                lines.Add(PathRenderer.Render(a, b));
+            }
 
             yield return new WaitForSeconds(0.5f);
 
             // Destroy lines
-            for (int i = 0; i < lines.Length; i++)
+            for (int i = 0; i < lines.Count; i++)
                 Destroy(lines[i].gameObject);
 
             AudioClip clip = Resources.Load<AudioClip>("sound/feedback/kill");
@@ -222,7 +233,6 @@ namespace Emojigame
             movingCells.Remove(c.cell);
         }
 
-        // check if lower left corner is clear
         protected bool IsPerfectGame()
         {
             return _map.GetCell(0, _map.LengthY - 1).IsEmpty;

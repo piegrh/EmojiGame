@@ -6,7 +6,7 @@ namespace Emojigame
     public class CellMapExplorer
     {
         public Cell[] visited;
-        public List<KeyValuePair<Vector3, Vector3>> path;
+        public List<KeyValuePair<Cell, Cell>> path;
         protected LineRenderer[] lrend;
 
         public CellMapExplorer(CellMap map, Cell start)
@@ -14,11 +14,9 @@ namespace Emojigame
             visited = Explore(map, start, out path).ToArray();
         }
 
-        public static List<Cell> Explore(CellMap map, Cell start, out List<KeyValuePair<Vector3, Vector3>> path)
+        public static List<Cell> Explore(CellMap map, Cell start, out List<KeyValuePair<Cell, Cell>> path)
         {
-            Vector3 vStart;
-            Vector3 vEnd;
-            path = new List<KeyValuePair<Vector3, Vector3>>();
+            path = new List<KeyValuePair<Cell, Cell>>();
             List<Cell> visitedCells = new List<Cell>();
             Queue<Cell> q = new Queue<Cell>();
             q.Enqueue(start);
@@ -27,32 +25,26 @@ namespace Emojigame
             while (q.Count > 0)
             {
                 temp = q.Dequeue();
-
                 if (!visitedCells.Contains(temp))
                     visitedCells.Add(temp);
                 else
                     continue;
-
                 adjCells = map.GetNeighbours(temp);
-
                 for (int i = 0; i < adjCells.Length; i++)
                 {
                     if (!visitedCells.Contains(adjCells[i]))
                     {
                         q.Enqueue(adjCells[i]);
-                        vStart = map.GetCanvasPosition(temp.pos);
-                        vEnd = map.GetCanvasPosition(adjCells[i].pos);
-                        path.Add(new KeyValuePair<Vector3, Vector3>(vStart, vEnd));
+                        path.Add(new KeyValuePair<Cell, Cell>(temp, adjCells[i]));
                     }
                 }
             }
             return visitedCells;
-
         }
 
         public static List<Cell> Explore(CellMap map, Cell start)
         {
-            return Explore(map, start, out List<KeyValuePair<Vector3, Vector3>> path);
+            return Explore(map, start, out List<KeyValuePair<Cell, Cell>> path);
         }
     }
 
