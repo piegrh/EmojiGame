@@ -1,48 +1,52 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class CellMapExplorer
+namespace Emojigame
 {
-    public Cell[] visited;
-    public List<KeyValuePair<Vector3, Vector3>> path;
-    protected LineRenderer[] lrend;
-
-    public CellMapExplorer(CellMap map, Cell start)
+    public class CellMapExplorer
     {
-        visited = Explore(map, start, out path).ToArray();
-    }
+        public Cell[] visited;
+        public List<KeyValuePair<Vector3, Vector3>> path;
+        protected LineRenderer[] lrend;
 
-    public static List<Cell> Explore(CellMap map, Cell start, out List<KeyValuePair<Vector3, Vector3>> path)
-    {
-        path = new List<KeyValuePair<Vector3, Vector3>>();
-        List<Cell> visitedCells = new List<Cell>();
-        Queue<Cell> q = new Queue<Cell>();
-        q.Enqueue(start);
-        Cell temp;
-        Cell[] adjCells;
-        while (q.Count > 0)
+        public CellMapExplorer(CellMap map, Cell start)
         {
-            temp = q.Dequeue();
-            if (!visitedCells.Contains(temp))
-                visitedCells.Add(temp);
-            else
-                continue;
-            adjCells = map.GetNeighbours(temp);
-            for (int i = 0; i < adjCells.Length; i++)
+            visited = Explore(map, start, out path).ToArray();
+        }
+
+        public static List<Cell> Explore(CellMap map, Cell start, out List<KeyValuePair<Vector3, Vector3>> path)
+        {
+            path = new List<KeyValuePair<Vector3, Vector3>>();
+            List<Cell> visitedCells = new List<Cell>();
+            Queue<Cell> q = new Queue<Cell>();
+            q.Enqueue(start);
+            Cell temp;
+            Cell[] adjCells;
+            while (q.Count > 0)
             {
-                if (!visitedCells.Contains(adjCells[i]))
+                temp = q.Dequeue();
+                if (!visitedCells.Contains(temp))
+                    visitedCells.Add(temp);
+                else
+                    continue;
+                adjCells = map.GetNeighbours(temp);
+                for (int i = 0; i < adjCells.Length; i++)
                 {
-                    q.Enqueue(adjCells[i]);
-                    path.Add(new KeyValuePair<Vector3, Vector3>(temp.transform.position, adjCells[i].transform.position));
+                    if (!visitedCells.Contains(adjCells[i]))
+                    {
+                        q.Enqueue(adjCells[i]);
+                        path.Add(new KeyValuePair<Vector3, Vector3>(temp.transform.position, adjCells[i].transform.position));
+                    }
                 }
             }
+            return visitedCells;
+
         }
-        return visitedCells;
 
+        public static List<Cell> Explore(CellMap map, Cell start)
+        {
+            return Explore(map, start, out List<KeyValuePair<Vector3, Vector3>> path);
+        }
     }
 
-    public static List<Cell> Explore(CellMap map, Cell start)
-    {
-        return Explore(map, start, out List<KeyValuePair<Vector3, Vector3>> path);
-    }
 }

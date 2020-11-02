@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Ulbe;
 using UnityEngine;
 
 public class PauseMenu : GUIPage

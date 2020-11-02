@@ -1,36 +1,40 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class Fps : MonoBehaviour
+
+namespace Ulbe
 {
-    Text fpstext;
-    float deltaTime = 0;
-    Cvar drawfps;
-
-    public void Awake()
+    public class Fps : MonoBehaviour
     {
-        drawfps = Cvars.Instance.Get("hud_drawfps", "0");
-        fpstext = GetComponent<Text>();
-        fpstext.text = "";
-    }
+        Text fpstext;
+        float deltaTime = 0;
+        Cvar drawfps;
 
-    public string GetFPS
-    {
-        get
+        public void Awake()
         {
-            return string.Format("{0} Fps", (1.0f / deltaTime).ToString("#."));
+            drawfps = Cvars.Instance.Get("hud_drawfps", "0");
+            fpstext = GetComponent<Text>();
+            fpstext.text = "";
         }
-    }
 
-    void Update()
-    {
-        deltaTime += (Time.unscaledDeltaTime - deltaTime) * 0.1f;
-        if (!drawfps.BoolValue)
+        public string GetFPS
         {
-            if (fpstext.text.Length > 0)
-                fpstext.text = "";
-            return;
+            get
+            {
+                return string.Format("{0} Fps", (1.0f / deltaTime).ToString("#."));
+            }
         }
-        fpstext.text = GetFPS;
+
+        void Update()
+        {
+            deltaTime += (Time.unscaledDeltaTime - deltaTime) * 0.1f;
+            if (!drawfps.BoolValue)
+            {
+                if (fpstext.text.Length > 0)
+                    fpstext.text = "";
+                return;
+            }
+            fpstext.text = GetFPS;
+        }
     }
 }

@@ -1,12 +1,16 @@
-﻿public class GameScorer
+﻿namespace Emojigame
 {
-    public static int FinalScore(int baseScore, int celltypes , bool perfectGame)
+    public class GameScorer
     {
-        return baseScore * (perfectGame ? celltypes : 1);
+        public static int FinalScore(int baseScore, int celltypes, bool perfectGame)
+        {
+            return baseScore * (perfectGame ? celltypes : 1);
+        }
+
+        public static int GetScore(int kills)
+        {
+            return kills > 1 ? kills * (kills + 128) : 0;
+        }
     }
 
-    public static int GetScore(int kills)
-    {
-        return kills > 1 ? kills * (kills + 128) : 0;
-    }
 }

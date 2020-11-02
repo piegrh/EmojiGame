@@ -1,29 +1,31 @@
-﻿
-public class Cvar 
+﻿namespace Ulbe
 {
-    [System.Flags]
-    public enum CvarFlags
+    public class Cvar
     {
-        CHEAT = 1,
-        INIT = 2,
-        ROM = 4,
-        USER_CREATED = 8,
-    }
-
-    public string name;
-    public CvarFlags flags;
-
-    public string resetString;
-    public string stringValue;
-    public float floatValue;
-    public int intValue;
-    public bool BoolValue { get { return intValue > 0; } }
-
-    public string Info
-    {
-        get
+        [System.Flags]
+        public enum CvarFlags
         {
-            return string.Format("Value: {0}, Default: {1}", stringValue, resetString);
+            CHEAT = 1,
+            INIT = 2,
+            ROM = 4,
+            USER_CREATED = 8,
+        }
+
+        public string name;
+        public CvarFlags flags;
+
+        public string resetString;
+        public string stringValue;
+        public float floatValue;
+        public int intValue;
+        public bool BoolValue { get { return intValue > 0; } }
+
+        public string Info
+        {
+            get
+            {
+                return string.Format("Value: {0}, Default: {1}", stringValue, resetString);
+            }
         }
     }
 }

@@ -1,20 +1,23 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using Ulbe;
 using UnityEngine;
 
-public class RandomEmoji : MonoBehaviour
+namespace Emojigame
 {
-    protected static Sprite[] sprites;
-
-    public void Awake()
+    public class RandomEmoji : MonoBehaviour
     {
-        GetComponent<SpriteRenderer>().sprite = GetRandomEmoji();
+        protected static Sprite[] sprites;
+
+        public void Awake()
+        {
+            GetComponent<SpriteRenderer>().sprite = GetRandomEmoji();
+        }
+
+        public static Sprite GetRandomEmoji()
+        {
+            if (sprites == null)
+                sprites = Resources.LoadAll<Sprite>("textures/Emoji");
+            return Utils.GetRandomFromCollection(sprites);
+        }
     }
 
-    public static Sprite GetRandomEmoji()
-    {
-        if(sprites == null)
-            sprites = Resources.LoadAll<Sprite>("textures/Emoji");
-        return UlbeUtils.GetRandomFromCollection(sprites);
-    }
 }

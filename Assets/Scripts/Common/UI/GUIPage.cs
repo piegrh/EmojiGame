@@ -2,22 +2,25 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GUIPage : MonoBehaviour
+namespace Ulbe
 {
-    [SerializeField] GUIPage prev;
-
-    public virtual void Back()
+    public class GUIPage : MonoBehaviour
     {
-        if(prev != null)
+        [SerializeField] public GUIPage prev;
+
+        public virtual void Back()
         {
-            prev.gameObject.SetActive(true);
-            gameObject.SetActive(false);
+            if (prev != null)
+            {
+                prev.gameObject.SetActive(true);
+                gameObject.SetActive(false);
+            }
         }
-    }
 
-    public void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.F2))
-            Back();
+        public void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.F2))
+                Back();
+        }
     }
 }

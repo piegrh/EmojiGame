@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 
-public class UlbeUtils
+namespace Ulbe
+{
+    public class Utils
     {
         public static T GetRandomFromCollection<T>(params T[] arr)
         {
@@ -48,12 +50,12 @@ public class UlbeUtils
 
         public static Gradient GradientRainbow(float alpha = 0.25f)
         {
-            return GradientAtoN(alpha, Color.red,Color.yellow, Color.green,Color.blue,Color.magenta);
+            return GradientAtoN(alpha, Color.red, Color.yellow, Color.green, Color.blue, Color.magenta);
         }
 
         public static Gradient GradientRandom(float alpha = 0.25f)
         {
-            return GradientRandom(alpha, Random.Range(1,9));
+            return GradientRandom(alpha, Random.Range(1, 9));
         }
 
         public static Gradient GradientRandom(float alpha, int colorCount)
@@ -61,7 +63,7 @@ public class UlbeUtils
             colorCount = Mathf.Clamp(colorCount, 1, 8);
             List<Color> colors = new List<Color>();
 
-            for(int i = 0; i < colorCount; i++)
+            for (int i = 0; i < colorCount; i++)
                 colors.Add(new Color(Random.Range(0f, 1f), Random.Range(0f, 1f), Random.Range(0f, 1f)));
 
             return GradientAtoN(alpha, colors.ToArray());
@@ -97,4 +99,5 @@ public class UlbeUtils
             g.SetKeys(gck, gak);
             return g;
         }
+    }
 }

@@ -1,34 +1,38 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class ButtonSfx : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler
+
+namespace Ulbe
 {
-    public AudioClip HoverSfx;
-    public AudioClip ClickSfx;
-    public float volumeClick = 1f;
-    public float volumeHover = 1f;
-
-    public void OnPointerEnter(PointerEventData pointerEventData)
+    public class ButtonSfx : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler
     {
-        Hover();
-    }
+        public AudioClip HoverSfx;
+        public AudioClip ClickSfx;
+        public float volumeClick = 1f;
+        public float volumeHover = 1f;
 
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        Click();
-    }
+        public void OnPointerEnter(PointerEventData pointerEventData)
+        {
+            Hover();
+        }
 
-    public void Hover()
-    {
-        if (HoverSfx == null)
-            return;
-        SoundMaster.Instance.PlayGlobalSound(HoverSfx, volumeHover);
-    }
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            Click();
+        }
 
-    public void Click()
-    {
-        if (ClickSfx == null)
-            return;
-        SoundMaster.Instance.PlayGlobalSound(ClickSfx, volumeClick);
+        public void Hover()
+        {
+            if (HoverSfx == null)
+                return;
+            SoundMaster.Instance.PlayGlobalSound(HoverSfx, volumeHover);
+        }
+
+        public void Click()
+        {
+            if (ClickSfx == null)
+                return;
+            SoundMaster.Instance.PlayGlobalSound(ClickSfx, volumeClick);
+        }
     }
 }
