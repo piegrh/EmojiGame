@@ -14,11 +14,13 @@ public class MainMenu : MonoBehaviour
         List<Dropdown.OptionData> sizeOpts = new List<Dropdown.OptionData>();
 
         int cnt = -1;
+
         foreach (CellGameSettings.LevelSize val in System.Enum.GetValues(typeof(CellGameSettings.LevelSize)))
         {
             sizeOpts.Add(new Dropdown.OptionData() { text = val.ToString() });
             cnt++;
         }
+
         Levelsize.options = sizeOpts;
         Levelsize.value = Mathf.Clamp(Cvars.Instance.Get("g_levelsize", "3").intValue, 0, cnt);
 
@@ -33,7 +35,6 @@ public class MainMenu : MonoBehaviour
 
         Difficulty.options = sizeOptsB;
         Difficulty.value = Mathf.Clamp(Cvars.Instance.Get("g_difficulty", "0").intValue, 0,cnt);
-
     }
 
     public void StartGame()

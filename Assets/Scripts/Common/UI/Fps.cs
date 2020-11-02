@@ -25,14 +25,12 @@ public class Fps : MonoBehaviour
     void Update()
     {
         deltaTime += (Time.unscaledDeltaTime - deltaTime) * 0.1f;
-        if (drawfps.BoolValue)
-        {
-            fpstext.text = GetFPS;
-        }
-        else
+        if (!drawfps.BoolValue)
         {
             if (fpstext.text.Length > 0)
                 fpstext.text = "";
+            return;
         }
+        fpstext.text = GetFPS;
     }
 }

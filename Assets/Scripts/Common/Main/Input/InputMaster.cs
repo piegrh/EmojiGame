@@ -5,7 +5,7 @@ using UnityEngine;
 public class InputMaster : MonoBehaviour
 {
     [System.Serializable]
-    protected internal class Keybind
+    protected internal struct Keybind
     {
         public string action;
         public string button;
@@ -26,13 +26,16 @@ public class InputMaster : MonoBehaviour
 
         keys = new Dictionary<string, KeyCode>(System.StringComparer.InvariantCultureIgnoreCase);
         DontDestroyOnLoad(gameObject);
+
         // Add Commands
         Commands.Instance.Cmd_AddCommand("bind", Bind_f);
         Commands.Instance.Cmd_AddCommand("unbind", Unbind_f);
         Commands.Instance.Cmd_AddCommand("bindlist", Bindlist_f);
+
         // Set default
         foreach (Keybind kb in DefaultKeys)
             Bind(kb.action, kb.button);
+
         s_instance = this;
     }
 

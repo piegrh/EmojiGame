@@ -16,7 +16,6 @@ public class GameHud : MonoBehaviour
         GameEvents.Instance.OnScore += SetScore;
         GameEvents.Instance.OnCellSelect += CellSelection;
         GameEvents.Instance.OnReset += ResetGame;
-
         SetScore(0);
     }
 
@@ -41,8 +40,10 @@ public class GameHud : MonoBehaviour
 
     protected int GetSpeed(int v)
     {
-        int value = v / 40;
-        return value > 0 ? value : v % 40;
+        const int den = 50;
+
+        int value = v / den;
+        return value > 0 ? value : v % den;
     }
 
     protected void CellSelection(int cnt)
@@ -55,17 +56,17 @@ public class GameHud : MonoBehaviour
         selectionValue.text = UlbeColorString.ColorizeString(string.Format("^3{0} ^7emojis will get you ^3{1} ^7points!", cnt, GameScorer.GetScore(cnt)));
     }
 
-    private void OnDestroy()
-    {
-        GameEvents.Instance.OnScore -= SetScore;
-        GameEvents.Instance.OnReset -= ResetGame;
-        GameEvents.Instance.OnCellSelect -= CellSelection;
-    }
-
     private void ResetGame()
     {
         addValue = 0;
         score = 0;
         SetScore(0);
+    }
+
+    private void OnDestroy()
+    {
+        GameEvents.Instance.OnScore -= SetScore;
+        GameEvents.Instance.OnReset -= ResetGame;
+        GameEvents.Instance.OnCellSelect -= CellSelection;
     }
 }

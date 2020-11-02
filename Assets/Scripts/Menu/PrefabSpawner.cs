@@ -14,19 +14,14 @@ public class PrefabSpawner : MonoBehaviour
 
     protected virtual IEnumerator Spawn()
     {
-
         GameObject g;
         for (int i = 0; i < cnt; i++)
         {
             g = Instantiate(prefab);
-
             if(delay > 0.01)
                 yield return new WaitForSeconds(delay);
-
             g.GetComponent<Rigidbody2D>().angularVelocity = 1000f * Random.value;
-
         }
-
-        Destroy(gameObject);
+        Destroy(this);
     }
 }

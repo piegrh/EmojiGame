@@ -117,13 +117,14 @@ public class EmojiGame : MonoBehaviour
         Cell[] movedCellsX = _map.ShiftLeft(startY);
 
         List<Cell> movingCells = new List<Cell>();
-
+        Cell temp;
         // Move cellobjects down
         for (int i = 0; i < movedCellsY.Length; i++)
         {
-            Vector3 old = movedCellsY[i].transform.localPosition;
-            Vector3 newpos = _map.GetCanvasPosition(movedCellsY[i].pos);
-            StartCoroutine(MoveTo(movedCellsY[i], new Vector3(old.x, newpos.y,0), movingCells));
+            temp = movedCellsY[i];
+            Vector3 old = temp.transform.localPosition;
+            Vector3 newpos = _map.GetCanvasPosition(temp.pos);
+            StartCoroutine(MoveTo(temp, new Vector3(old.x, newpos.y,0), movingCells));
         }
 
         yield return new WaitUntil(() => movingCells.Count == 0);
@@ -133,9 +134,10 @@ public class EmojiGame : MonoBehaviour
         // Move cellobjects to the left
         for (int i = 0; i < movedCellsX.Length; i++)
         {
-            Vector3 old = movedCellsX[i].transform.localPosition;
+            temp = movedCellsX[i];
+            Vector3 old = temp.transform.localPosition;
             Vector3 newpos = _map.GetCanvasPosition(movedCellsX[i].pos);
-            StartCoroutine(MoveTo(movedCellsX[i], new Vector3(newpos.x, old.y, 0), movingCells));
+            StartCoroutine(MoveTo(temp, new Vector3(newpos.x, old.y, 0), movingCells));
         }
 
         yield return new WaitUntil(() => movingCells.Count == 0);
@@ -148,17 +150,21 @@ public class EmojiGame : MonoBehaviour
 
     protected IEnumerator MoveTo(Cell c,Vector3 pos,List<Cell> movingCells, float speed = 1000f)
     {
+        Transform t = c.transform;
+
         movingCells.Add(c);
+
         while (true)
         {
-            c.transform.localPosition = Vector3.MoveTowards(c.transform.localPosition, pos, speed * Time.fixedDeltaTime);
+            t.localPosition = Vector3.MoveTowards(t.localPosition, pos, speed * Time.fixedDeltaTime);
             yield return new WaitForFixedUpdate();
-            if (Vector3.Distance(c.transform.localPosition, pos) <= 0.01f)
+            if (Vector3.Distance(t.localPosition, pos) <= 0.01f)
             {
-                c.transform.localPosition = pos;
+                t.localPosition = pos;
                 break;
             }
         }
+
         movingCells.Remove(c);
     }
 

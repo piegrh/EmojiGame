@@ -272,6 +272,6 @@ public class CellMap
         for (int y = 0; y < Size.y; y++)
             for (int x = 0; x < Size.x; x++)
                 if (!map[x, y].IsEmpty)
-                    map[x, y].GetComponent<UnityEngine.UI.Image>().sprite = Sprites[map[x, y].CellTypeID];
+                    map[x, y].img.sprite = Sprites[map[x, y].CellTypeID];
     }
 }

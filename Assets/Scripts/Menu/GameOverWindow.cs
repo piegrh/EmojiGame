@@ -6,13 +6,19 @@ using UnityEngine.UI;
 
 public class GameOverWindow : MonoBehaviour
 {
-    [SerializeField] protected GameObject window;
-    [SerializeField] protected Text ScoreBox;
+    [SerializeField] GameObject window;
+    [SerializeField] Text ScoreBox;
+    Image _image;
 
     public void Awake()
     {
         GameEvents.Instance.OnGameOver += SetScoreTable;
         GameEvents.Instance.OnReset += Hide;
+        _image = GetComponent<Image>();
+    }
+
+    public void Start()
+    {
         SetEnable(false);
     }
 
@@ -35,7 +41,7 @@ public class GameOverWindow : MonoBehaviour
 
     public void SetEnable(bool value)
     {
-        GetComponent<Image>().enabled = value;
+        _image.enabled = value;
         window.gameObject.SetActive(value);
     }
 

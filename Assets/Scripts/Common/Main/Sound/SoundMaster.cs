@@ -6,8 +6,13 @@ public class SoundMaster : MonoBehaviour
     public enum SoundType { SFX, AMBIENT, MUSIC }
     protected Queue<SoundEmitter> queue;
     protected SoundEmitter currentSoundEmitter;
+
     private static SoundMaster s_instance;
     public static SoundMaster Instance => s_instance ?? new GameObject("SoundMaster").AddComponent<SoundMaster>();
+    public Cvar Master { get; set; }
+    public Cvar Sfx { get; set; }
+    public Cvar Ambient { get; set; }
+    public Cvar Music { get; set; }
 
     private void Awake()
     {
@@ -17,9 +22,10 @@ public class SoundMaster : MonoBehaviour
             return;
         }
 
-        Cvars.Instance.Get("s_sfx", "1");
-        Cvars.Instance.Get("s_music", "1");
-        Cvars.Instance.Get("s_volume", "1");
+        Music = Cvars.Instance.Get("s_sfx", "1");
+        Sfx = Cvars.Instance.Get("s_music", "1");
+        Ambient = Cvars.Instance.Get("s_ambient", "1");
+        Master = Cvars.Instance.Get("s_volume", "1");
 
         queue = new Queue<SoundEmitter>();
         s_instance = this;
@@ -52,7 +58,7 @@ public class SoundMaster : MonoBehaviour
         SoundEmitter se = CreateGlobalSoundEmitter(clip, volume, sType, pitch);
         se.gameObject.transform.parent = transform;
         se.Play();
-        Destroy(se.gameObject, 1.5f + se.GetComponent<AudioSource>().time);
+        Destroy(se.gameObject, 1.5f + se.src.time);
     }
 
     public void PlayWorldSound(AudioClip clip, float volume, Vector3 pos, SoundType sType = SoundType.SFX,
@@ -61,7 +67,7 @@ public class SoundMaster : MonoBehaviour
         SoundEmitter se = CreateWorldSoundEmitter(clip, volume,pos, sType, minDistance, maxdistance, mode);
         se.Play();
         se.gameObject.transform.parent = transform;
-        Destroy(se.gameObject, 1.5f + se.GetComponent<AudioSource>().time);
+        Destroy(se.gameObject, 1.5f + se.src.time);
     }
 
     protected SoundEmitter CreateGlobalSoundEmitter(AudioClip clip, float volume, SoundType sType = SoundType.SFX, float pitch = 1f)
@@ -84,11 +90,10 @@ public class SoundMaster : MonoBehaviour
         SoundEmitter se = CreateGlobalSoundEmitter(clip, volume, sType, pitch);
         se.transform.position = pos;
         se.gameObject.transform.parent = transform;
-        AudioSource asrc = se.GetComponent<AudioSource>();
-        asrc.spatialBlend = 1f;
-        asrc.minDistance = minDistance;
-        asrc.maxDistance = maxdistance; 
-        asrc.rolloffMode = mode;
+        se.src.spatialBlend = 1f;
+        se.src.minDistance = minDistance;
+        se.src.maxDistance = maxdistance;
+        se.src.rolloffMode = mode;
         return se;
     }
 }

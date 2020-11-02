@@ -6,22 +6,21 @@ public class SoundEmitter : MonoBehaviour
     public SoundMaster.SoundType soundType;
     public float BaseVolume { get; set; }
     protected float pitch = 1f;
-    protected Cvar master;
-    protected Cvar sfx;
-    protected Cvar ambient;
-    protected Cvar music;
 
     protected void Awake()
     {
         src = GetComponent<AudioSource>();
+
         if(src == null)
             src = gameObject.AddComponent<AudioSource>();
+
         if (src == null)
         {
             Debug.LogError(string.Format("Missing AudioSource! ({0})", gameObject.name));
             Destroy(gameObject);
             return;
         }
+
         BaseVolume = src.volume;
     }
 
@@ -34,15 +33,18 @@ public class SoundEmitter : MonoBehaviour
     protected void UpdateVolume()
     {
         float vol;
+
         src.pitch = pitch * UnityEngine.Time.timeScale;
+
         switch (soundType)
         {
-            case SoundMaster.SoundType.SFX: vol = Cvars.Instance.Get("s_sfx", "1").floatValue; break;
-            case SoundMaster.SoundType.MUSIC: vol = Cvars.Instance.Get("s_music", "1").floatValue; break;
-            case SoundMaster.SoundType.AMBIENT: vol = Cvars.Instance.Get("s_ambient", "1").floatValue; break;
+            case SoundMaster.SoundType.SFX: vol = SoundMaster.Instance.Sfx.floatValue; break;
+            case SoundMaster.SoundType.MUSIC: vol = SoundMaster.Instance.Music.floatValue; break;
+            case SoundMaster.SoundType.AMBIENT: vol = SoundMaster.Instance.Ambient.floatValue; break;
             default: vol = 0f; break;
         }
-        src.volume = BaseVolume * vol * Cvars.Instance.Get("s_volume", "1").floatValue;
+
+        src.volume = BaseVolume * vol * SoundMaster.Instance.Master.floatValue;
     }
 
     public void Play()

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GUIPage : MonoBehaviour
 {
-    [SerializeField] protected GUIPage prev;
+    [SerializeField] GUIPage prev;
 
     public virtual void Back()
     {
