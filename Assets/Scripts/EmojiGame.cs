@@ -9,11 +9,13 @@ namespace Emojigame
     {
         protected enum GameState { WaitForClick, Selected, Clicked, GameOver }
         protected GameState state;
-        public GameObject GamePanel;
-        public GameObject CellPrefab;
+        public GameObject gamePanel;
+        public GameObject cellPrefab;
+        public Sprite[] Sprites { get; protected set; }
         CellMap _map;
         Cell selected;
         CellGameSettings settings;
+        Dictionary<Cell, CellView> cells;
         int score;
 
         void Start()
@@ -24,14 +26,62 @@ namespace Emojigame
 
         protected void Init()
         {
-            state = GameState.WaitForClick;
-            score = 0;
+            cells = new Dictionary<Cell, CellView>();
+
             settings = new CellGameSettings
             {
-                difficulty = (CellGameSettings.Difficulty)Cvars.Instance.Get("g_difficulty", "0").intValue,
-                size = (CellGameSettings.LevelSize)Cvars.Instance.Get("g_levelsize", "2").intValue
+                difficulty = (CellGameSettings.Difficulty) Cvars.Instance.Get("g_difficulty", "0").intValue,
+                size = (CellGameSettings.LevelSize) Cvars.Instance.Get("g_levelsize", "2").intValue
             };
-            _map = new CellMap(settings, GamePanel, CellPrefab);
+
+            Vector2 cellSize = new Vector2(100, 100);
+            cellSize /= (1 + (int)settings.size);
+
+            Vector2 levelSize = gamePanel.GetComponent<RectTransform>().sizeDelta;
+
+            cellPrefab.GetComponent<RectTransform>().sizeDelta = cellSize;
+
+            _map = new CellMap(levelSize, cellSize);
+
+            Sprites = new Sprite[2+(int)settings.difficulty];
+            Transform tParent = gamePanel.transform;
+            CellView cv;
+
+            for (int y = 0; y < _map.LengthY; y++)
+            {
+                for (int x = 0; x < _map.LengthX; x++)
+                {
+                    cv = Instantiate(cellPrefab, tParent).GetComponent<CellView>();
+                    cv.cell = _map.GetCell(x, y);
+                    cv.name = string.Format("({0},{1})",x,y);
+                    cells.Add(cv.cell, cv);
+                    cv.SetPosition(_map.GetCanvasPosition(x, y));
+                }
+            }
+
+            ResetGame();
+        }
+
+        public void ResetGame()
+        {
+            GameEvents.Instance.ResetGame();
+            state = GameState.WaitForClick;
+            score = 0;
+
+            CellView view;
+
+            for (int y = 0; y < _map.LengthY; y++)
+            {
+                for (int x = 0; x < _map.LengthX; x++)
+                {
+                    view = GetView(x, y);
+                    view.cell.seleted = false;
+                    view.cell.cellType = Random.Range(0, Sprites.Length);
+                    view.Show();
+                }
+            }
+
+            ChangeAllCellSprites();
         }
 
         public virtual void CellClickEvent(Cell cell)
@@ -40,9 +90,9 @@ namespace Emojigame
             {
                 case GameState.Selected:
                     // Double click?
-                    if (_map.IsSelected(cell))
+                    if (IsSelected(cell))
                     {
-                        _map.DeSelectConnectedCells(cell);
+                        DeSelectConnectedCells(cell);
                         if (_map.HasNeighbours(cell))
                         {
                             state = GameState.Clicked;
@@ -51,7 +101,7 @@ namespace Emojigame
                         return;
                     }
                     // No double click
-                    _map.DeSelectConnectedCells(selected);
+                    DeSelectConnectedCells(selected);
                     Select(cell);
                     break;
                 case GameState.WaitForClick:
@@ -67,19 +117,20 @@ namespace Emojigame
         {
             state = GameState.GameOver;
             bool perfect = IsPerfectGame();
-            GameEvents.Instance.GameOver(score, _map.NumberOfCellTypes(), perfect);
+            GameEvents.Instance.GameOver(score, Sprites.Length, perfect);
             if (perfect)
                 SoundMaster.Instance.PlayGlobalSound(Resources.Load<AudioClip>("sound/feedback/perfect"), 0.5f);
-            ChangeAllCellSpritesButton();
         }
 
         protected void Select(Cell c)
         {
-            int connectedCnt = _map.SelectConnectedCells(c);
+            int connectedCnt = SelectConnectedCells(c);
             selected = c;
+            c.seleted = true;
             GameEvents.Instance.CellSelect(connectedCnt);
         }
 
+        //FIXME
         protected IEnumerator ClickCellCoroutine(Cell c)
         {
             // Draw lines
@@ -103,11 +154,11 @@ namespace Emojigame
                 // Get upper and lower x bounds to avoid checking unaffected rows
                 startX = cell.pos.x > startX ? cell.pos.x : startX;
                 endX = cell.pos.x < endX ? cell.pos.x : endX;
-
+               
                 // Get lower y bounds.
                 startY = cell.pos.y > startY ? cell.pos.y : startY;
 
-                cell.Explode();
+                GetView(cell).Explode();
 
                 SoundMaster.Instance.PlayGlobalSound(clip, 0.15f, SoundMaster.SoundType.SFX, Random.Range(1f, 3f));
                 yield return new WaitForFixedUpdate();
@@ -121,14 +172,15 @@ namespace Emojigame
 
             List<Cell> movingCells = new List<Cell>();
 
-            Cell temp;
+            CellView temp;
+
             // Move cellobjects down
             for (int i = 0; i < movedCellsY.Length; i++)
             {
-                temp = movedCellsY[i];
-                StartCoroutine(MoveToCoroutine(temp,
-                    new Vector3(temp.transform.localPosition.x, _map.GetCanvasPosition(temp.pos).y, 0), movingCells)
-                    );
+                temp = GetView(movedCellsY[i]);
+                Vector3 oldPos = temp.transform.localPosition;
+                Vector3 newPos = _map.GetCanvasPosition(temp.cell.pos);
+                StartCoroutine(MoveToCoroutine(temp, new Vector3(oldPos.x, newPos.y, 0), movingCells));
             }
 
             yield return new WaitUntil(() => movingCells.Count == 0);
@@ -138,10 +190,10 @@ namespace Emojigame
             // Move cellobjects to the left
             for (int i = 0; i < movedCellsX.Length; i++)
             {
-                temp = movedCellsX[i];
-                StartCoroutine(MoveToCoroutine(temp,
-                    new Vector3(temp.transform.localPosition.x, _map.GetCanvasPosition(temp.pos).y, 0), movingCells)
-                    );
+                temp = GetView(movedCellsX[i]);
+                Vector3 oldPos = temp.transform.localPosition;
+                Vector3 newPos = _map.GetCanvasPosition(movedCellsX[i].pos);
+                StartCoroutine(MoveToCoroutine(temp, new Vector3(newPos.x, oldPos.y, 0), movingCells));
             }
 
             yield return new WaitUntil(() => movingCells.Count == 0);
@@ -152,26 +204,23 @@ namespace Emojigame
                 GameOver();
         }
 
-        protected IEnumerator MoveToCoroutine(Cell c, Vector3 pos, List<Cell> movingCells, float speed = 1000f)
+        protected IEnumerator MoveToCoroutine(CellView c, Vector3 pos, List<Cell> movingCells, float speed = 1000f)
         {
-            Transform t = c.transform;
-
-            movingCells.Add(c);
+            movingCells.Add(c.cell);
 
             while (true)
             {
-                t.localPosition = Vector3.MoveTowards(t.localPosition, pos, speed * Time.fixedDeltaTime);
+                c.RectTransofrm.localPosition = Vector3.MoveTowards(c.RectTransofrm.localPosition, pos, speed * Time.fixedDeltaTime);
                 yield return new WaitForFixedUpdate();
-                if (Vector3.Distance(t.localPosition, pos) <= 0.01f)
+                if (Vector3.Distance(c.RectTransofrm.localPosition, pos) <= 0.01f)
                 {
-                    t.localPosition = pos;
+                    c.RectTransofrm.localPosition = pos;
                     break;
                 }
             }
 
-            movingCells.Remove(c);
+            movingCells.Remove(c.cell);
         }
-
 
         // check if lower left corner is clear
         protected bool IsPerfectGame()
@@ -195,21 +244,83 @@ namespace Emojigame
 
         public void ResetGameButton()
         {
-            GameEvents.Instance.ResetGame();
-            score = 0;
-            _map.ResetLevel();
-            state = GameState.WaitForClick;
+            ResetGame();
         }
 
         protected void AddScore(int s)
         {
-            this.score += s;
+            score += s;
             GameEvents.Instance.Score(s);
         }
 
-        public void ChangeAllCellSpritesButton()
+        public void ChangeAllCellSprites()
         {
-            _map.ChangeAllCellSprites();
+            GetNewEmojiSprites();
+            Cell temp;
+            for (int y = 0; y < _map.Size.y; y++)
+            {
+                for (int x = 0; x < _map.Size.x; x++)
+                {
+                    temp = _map.GetCell(x, y);
+                    if (temp.IsEmpty)
+                        continue;
+                    GetView(temp).SetSprite(Sprites[temp.cellType]);
+                }
+            }
+        }
+
+        public int SelectConnectedCells(Cell c)
+        {
+            return EnableConnectedCells(c, true);
+        }
+
+        public int DeSelectConnectedCells(Cell c)
+        {
+            return EnableConnectedCells(c, false);
+        }
+
+        protected int EnableConnectedCells(Cell c, bool value)
+        {
+            Cell[] cells = GetAllConnectedCells(c);
+            for (int i = 0; i < cells.Length; i++)
+                cells[i].seleted = value;
+            return cells.Length;
+        }
+
+        public bool IsSelected(Cell c)
+        {
+            return CellMapExplorer.Explore(_map, c).Contains(c) && c.seleted;
+        }
+
+        protected void GetNewEmojiSprites()
+        {
+            HashSet<string> added = new HashSet<string>();
+            for (int i = 0; i < Sprites.Length; i++)
+            {
+                Sprites[i] = RandomEmoji.GetRandomEmoji();
+                if (!added.Add(Sprites[i].name))
+                    i--; // sprite is already added, get a new one
+            }
+        }
+
+        public Cell[] GetAllConnectedCells(Cell c)
+        {
+            return CellMapExplorer.Explore(_map, c).ToArray();
+        }
+
+        public CellView GetView(Vector2Int pos)
+        {
+            return GetView(_map.GetCell(pos.x, pos.y));
+        }
+
+        public CellView GetView(int x,int y)
+        {
+            return GetView(_map.GetCell(x, y));
+        }
+
+        public CellView GetView(Cell c)
+        {
+            return cells[c];
         }
 
         private void OnDestroy()

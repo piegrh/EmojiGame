@@ -11,11 +11,10 @@ GameObject:
   - component: {fileID: 4449513487474519168}
   - component: {fileID: 8445953223835509703}
   - component: {fileID: 2593166761999065597}
-  - component: {fileID: 707934188784158018}
-  - component: {fileID: 63877383728265055}
   - component: {fileID: 6673233000229427532}
   - component: {fileID: 4891005411770252265}
   - component: {fileID: 2168976425667338082}
+  - component: {fileID: 8359983018401874719}
   m_Layer: 5
   m_Name: Cell
   m_TagString: Untagged
@@ -69,7 +68,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: dda3e05b1793278418ed8f04be149abc, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 99cdaddb5779cb74b93254309ed519d2, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -79,41 +78,6 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
---- !u!114 &707934188784158018
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 295455890453431376}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5060ae34579e06242906e3f57c6a1d12, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  CellTypeID: -1
-  pos: {x: 0, y: 0}
-  seleted: 0
-  DeathFX: {fileID: 655538947925474927, guid: fe407d1c80243c54f8fd7e86088b5f4a, type: 3}
---- !u!95 &63877383728265055
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 295455890453431376}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &6673233000229427532
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -157,7 +121,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 707934188784158018}
+      - m_Target: {fileID: 8359983018401874719}
         m_MethodName: OnMouseDown
         m_Mode: 1
         m_Arguments:
@@ -200,3 +164,21 @@ MonoBehaviour:
   freq: {x: 1, y: 1, z: 0}
   offset: {x: 0, y: 0, z: 0}
   scale: {x: 0, y: 0, z: 0}
+--- !u!114 &8359983018401874719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 295455890453431376}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33f1562d6dd736543ac9ddcaae7611ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cell:
+    pos: {x: 0, y: 0}
+    cellType: 0
+    seleted: 0
+  DeathFX: {fileID: 655538947925474927, guid: fe407d1c80243c54f8fd7e86088b5f4a, type: 3}
+  img: {fileID: 2593166761999065597}

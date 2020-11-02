@@ -17,83 +17,24 @@ namespace Emojigame
         public Vector2 CellSize { get; protected set; } = new Vector2(100, 100);
         public Vector2 Offset { get; protected set; }
         public Vector2 Size { get; protected set; }
-        public Sprite[] Sprites { get; protected set; }
-        protected CellGameSettings settings;
 
-        public int NumberOfCellTypes()
+        public CellMap(Vector2 Size, Vector2 Cellsize)
         {
-            return 2 + (int)settings.difficulty;
+            Init(Size, Cellsize);
         }
 
-        public CellMap(CellGameSettings settings, GameObject gamePanel, GameObject cellPrefab)
+        protected void Init(Vector2 size, Vector2 cellSize)
         {
-            this.settings = settings;
-            Init(settings, gamePanel, cellPrefab);
-        }
+            Size = size;
+            CellSize = cellSize;
 
-        protected virtual void Init(CellGameSettings settings, GameObject gamePanel, GameObject cellPrefab)
-        {
-            Size = gamePanel.GetComponent<RectTransform>().sizeDelta;
-            CellSize = new Vector2(100, 100);
-            CellSize /= (1 + (int)settings.size);
-
-            cellPrefab.GetComponent<RectTransform>().sizeDelta = CellSize;
-
-            Sprites = new Sprite[NumberOfCellTypes()];
             Offset = new Vector2(CellSize.x / 2, CellSize.y / 2);
             Size = new Vector2(Size.x / (CellSize.x), Size.y / (CellSize.y));
-
-            SetRandomSprites();
-
-            GameObject g;
-            Cell c;
-
             map = new Cell[(int)Size.x, (int)Size.y];
 
             for (int y = 0; y < Size.y; y++)
-            {
                 for (int x = 0; x < Size.x; x++)
-                {
-                    g = Object.Instantiate(cellPrefab, null);
-                    c = CreateRandomCell(x, y, g);
-                    g.transform.SetParent(gamePanel.transform);
-                    g.transform.localScale = new Vector3(1, 1, 1);
-                    g.transform.localPosition = GetCanvasPosition(x, y);
-                    map[x, y] = c;
-                }
-            }
-        }
-
-        public Vector3 GetCanvasPosition(Vector2Int pos)
-        {
-            return GetCanvasPosition(pos.x, pos.y);
-        }
-
-        public Vector3 GetCanvasPosition(int x,int y)
-        {
-            return new Vector3((CellSize.x * x) + Offset.x, (-CellSize.y * y) - Offset.y, 0);
-        }
-
-        protected Cell CreateRandomCell(int x, int y, GameObject g)
-        {
-            Cell c = g.GetComponent<Cell>();
-            c.name = string.Format("cell({0},{1})", x, y);
-            c.CellTypeID = Random.Range(0, Sprites.Length);
-            c.pos = new Vector2Int(x, y);
-            c.GetComponent<UnityEngine.UI.Image>().sprite = Sprites[c.CellTypeID];
-            c.EnableCell();
-            return c;
-        }
-
-        public void SelectCell(Vector2Int pos)
-        {
-            SelectCell(GetCell(pos.x, pos.y));
-        }
-
-        public void SelectCell(Cell c)
-        {
-            if (c != null)
-                c.SetSelected(true);
+                    map[x, y] = new Cell(x, y);
         }
 
         public virtual Cell[] ShiftDown(int startX, int endX, int startY)
@@ -169,53 +110,23 @@ namespace Emojigame
             List<Cell> cells = new List<Cell>();
             Cell temp;
             // right
-            if ((temp = GetCell(c.pos.x + 1, c.pos.y + 0)) != null && temp.CellTypeID == c.CellTypeID)
+            if ((temp = GetCell(c.pos.x + 1, c.pos.y + 0)) != null && temp.cellType == c.cellType)
                 cells.Add(temp);
             // left
-            if ((temp = GetCell(c.pos.x - 1, c.pos.y + 0)) != null && temp.CellTypeID == c.CellTypeID)
+            if ((temp = GetCell(c.pos.x - 1, c.pos.y + 0)) != null && temp.cellType == c.cellType)
                 cells.Add(temp);
             // Up
-            if ((temp = GetCell(c.pos.x + 0, c.pos.y - 1)) != null && temp.CellTypeID == c.CellTypeID)
+            if ((temp = GetCell(c.pos.x + 0, c.pos.y - 1)) != null && temp.cellType == c.cellType)
                 cells.Add(temp);
             // Down
-            if ((temp = GetCell(c.pos.x + 0, c.pos.y + 1)) != null && temp.CellTypeID == c.CellTypeID)
+            if ((temp = GetCell(c.pos.x + 0, c.pos.y + 1)) != null && temp.cellType == c.cellType)
                 cells.Add(temp);
             return cells.ToArray();
-        }
-
-        public Cell[] GetAllConnectedCells(Cell c)
-        {
-            return CellMapExplorer.Explore(this,c).ToArray();
         }
 
         public bool HasNeighbours(Cell c)
         {
             return GetNeighbours(c).Length > 0;
-        }
-
-        public bool IsSelected(Cell c)
-        {
-            return CellMapExplorer.Explore(this, c).Contains(c) && c.seleted;
-        }
-
-        public int SelectConnectedCells(Cell c)
-        {
-            return EnableConnectedCells(c, true);
-        }
-
-        public int DeSelectConnectedCells(Cell c)
-        {
-            return EnableConnectedCells(c, false);
-        }
-
-        protected int EnableConnectedCells(Cell c, bool value)
-        {
-            Cell[] cells = GetAllConnectedCells(c);
-
-            for (int i = 0; i < cells.Length; i++)
-                cells[i].SetSelected(value);
-
-            return cells.Length;
         }
 
         protected void Swap(Vector2Int a, Vector2Int b)
@@ -250,31 +161,14 @@ namespace Emojigame
             get { return map.GetLength(1); }
         }
 
-        protected void SetRandomSprites()
+        public Vector3 GetCanvasPosition(Vector2Int pos)
         {
-            HashSet<string> added = new HashSet<string>();
-            for (int i = 0; i < Sprites.Length; i++)
-            {
-                Sprites[i] = RandomEmoji.GetRandomEmoji();
-                if (!added.Add(Sprites[i].name))
-                    i--; // sprite is already added, get a new one
-            }
+            return GetCanvasPosition(pos.x, pos.y);
         }
 
-        public void ResetLevel()
+        public Vector3 GetCanvasPosition(int x, int y)
         {
-            for (int y = 0; y < Size.y; y++)
-                for (int x = 0; x < Size.x; x++)
-                    CreateRandomCell(x, y, map[x, y].gameObject);
-        }
-
-        public void ChangeAllCellSprites()
-        {
-            SetRandomSprites();
-            for (int y = 0; y < Size.y; y++)
-                for (int x = 0; x < Size.x; x++)
-                    if (!map[x, y].IsEmpty)
-                        map[x, y].img.sprite = Sprites[map[x, y].CellTypeID];
+            return new Vector3((CellSize.x * x) + Offset.x, (-CellSize.y * y) - Offset.y, 0);
         }
     }
 }

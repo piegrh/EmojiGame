@@ -43,7 +43,6 @@ namespace Ulbe
                 Destroy(gameObject);
                 return;
             }
-
             conText = new List<string>();
             history = new string[CON_MAX_HISTORY_LEN];
             InitCvars();

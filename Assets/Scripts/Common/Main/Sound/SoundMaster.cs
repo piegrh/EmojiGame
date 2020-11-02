@@ -10,6 +10,7 @@ namespace Ulbe
 
         private static SoundMaster s_instance;
         public static SoundMaster Instance => s_instance ?? new GameObject("SoundMaster").AddComponent<SoundMaster>();
+
         public Cvar Master { get; set; }
         public Cvar Sfx { get; set; }
         public Cvar Ambient { get; set; }

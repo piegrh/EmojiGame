@@ -6117,6 +6117,12 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7433688978753923517, guid: 0ad94e24e56b92e45a750f08494679d2,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: e5d37e67e9b49974bab5d951bc3938f7,
+        type: 3}
     - target: {fileID: 7433688980148110756, guid: 0ad94e24e56b92e45a750f08494679d2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -7177,7 +7183,7 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 21300000, guid: 4c5a2956e14281647a6e7dd977f77be5,
+      objectReference: {fileID: 21300000, guid: 391e254b947efc14abc9885e6ede3e03,
         type: 3}
     - target: {fileID: 942867517295053957, guid: 42f4832a365bb3842afd558530b67658,
         type: 3}
@@ -7204,9 +7210,7 @@ PrefabInstance:
     - target: {fileID: 3293040724709226172, guid: 91c8885daf4dd8f40808a7c5f6c94dd6,
         type: 3}
       propertyPath: m_Text
-      value: 'CONTINUE
-
-'
+      value: CONTINUE
       objectReference: {fileID: 0}
     - target: {fileID: 3293040724709226172, guid: 91c8885daf4dd8f40808a7c5f6c94dd6,
         type: 3}
@@ -7222,6 +7226,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Color.b
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3293040724709226172, guid: 91c8885daf4dd8f40808a7c5f6c94dd6,
+        type: 3}
+      propertyPath: m_FontData.m_Alignment
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3293040726063303944, guid: 91c8885daf4dd8f40808a7c5f6c94dd6,
         type: 3}
@@ -8300,6 +8309,12 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 942867517115097741, guid: 42f4832a365bb3842afd558530b67658,
+        type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 006187cc54e9b1441b0d03965303eeaf,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 42f4832a365bb3842afd558530b67658, type: 3}
 --- !u!4 &1410548156 stripped
@@ -8581,8 +8596,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08e50344cff2a1548a506d79b4d82ceb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  GamePanel: {fileID: 1239468358}
-  CellPrefab: {fileID: 295455890453431376, guid: ee147dd4063f7cd4891c5a5ebb53a002,
+  gamePanel: {fileID: 1239468358}
+  cellPrefab: {fileID: 295455890453431376, guid: ee147dd4063f7cd4891c5a5ebb53a002,
     type: 3}
 --- !u!4 &1520680215
 Transform:
@@ -9335,7 +9350,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 1520680214}
-        m_MethodName: ChangeAllCellSpritesButton
+        m_MethodName: ChangeAllCellSprites
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

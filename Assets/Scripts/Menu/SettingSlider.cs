@@ -8,14 +8,16 @@ public class SettingSlider : MonoBehaviour
     public Scrollbar bar;
     public InputField field;
     public bool updated;
-    Cvar cvar;
 
     protected void Awake()
     {
         bar.onValueChanged.AddListener(delegate { ValueUpdated(); });
         field.onValueChanged.AddListener(delegate { InputvalueChanged(); });
+    }
+
+    protected void Start()
+    {
         ResetValue();
-        cvar = Cvars.Instance.Cvar_Find(cvarName);
     }
 
     protected void ValueUpdated()
@@ -34,13 +36,13 @@ public class SettingSlider : MonoBehaviour
     public void Apply()
     {
         if(!updated)
-           cvar = Cvars.Instance.Set(cvarName, bar.value.ToString(), false);
+          Cvars.Instance.Set(cvarName, bar.value.ToString(), false);
         updated = true;
     }
 
     public void ResetValue()
     {
-        bar.value = cvar.floatValue;
+        bar.value = Cvars.Instance.Cvar_Find(cvarName).floatValue;
         updated = false;
         Apply();
     }

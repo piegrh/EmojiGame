@@ -16,6 +16,8 @@ namespace Emojigame
 
         public static List<Cell> Explore(CellMap map, Cell start, out List<KeyValuePair<Vector3, Vector3>> path)
         {
+            Vector3 vStart;
+            Vector3 vEnd;
             path = new List<KeyValuePair<Vector3, Vector3>>();
             List<Cell> visitedCells = new List<Cell>();
             Queue<Cell> q = new Queue<Cell>();
@@ -25,17 +27,22 @@ namespace Emojigame
             while (q.Count > 0)
             {
                 temp = q.Dequeue();
+
                 if (!visitedCells.Contains(temp))
                     visitedCells.Add(temp);
                 else
                     continue;
+
                 adjCells = map.GetNeighbours(temp);
+
                 for (int i = 0; i < adjCells.Length; i++)
                 {
                     if (!visitedCells.Contains(adjCells[i]))
                     {
                         q.Enqueue(adjCells[i]);
-                        path.Add(new KeyValuePair<Vector3, Vector3>(temp.transform.position, adjCells[i].transform.position));
+                        vStart = map.GetCanvasPosition(temp.pos);
+                        vEnd = map.GetCanvasPosition(adjCells[i].pos);
+                        path.Add(new KeyValuePair<Vector3, Vector3>(vStart, vEnd));
                     }
                 }
             }
