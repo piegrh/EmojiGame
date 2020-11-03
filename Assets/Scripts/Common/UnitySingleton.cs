@@ -5,7 +5,7 @@ namespace Ulbe
     public class UnitySingleton<T> : MonoBehaviour where T : MonoBehaviour
     {
         protected static T _Instance;
-        public static T Instance => _Instance ?? new GameObject("UnitySingleton").AddComponent<T>();
+        public static T Instance => _Instance ?? new GameObject().AddComponent<T>();
 
         protected virtual void Awake()
         {
@@ -15,8 +15,9 @@ namespace Ulbe
                 return;
             }
 
+            (this as T).name = (this as T).GetType().Name;
+
             _Instance = this as T;
-            DontDestroyOnLoad(gameObject);
         }
 
         protected virtual void OnDestroy()

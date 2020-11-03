@@ -21,6 +21,9 @@ namespace Emojigame
         {
             base.Awake();
 
+            if (_Instance != this)
+                return;
+
             poolDic = new Dictionary<string, Queue<GameObject>>();
 
             pools = new Pool<GameObject>[]

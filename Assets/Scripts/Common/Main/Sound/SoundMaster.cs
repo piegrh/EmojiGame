@@ -25,6 +25,8 @@ namespace Ulbe
             Master = Cvars.Instance.Get("s_volume", "1");
 
             queue = new Queue<SoundEmitter>();
+
+            DontDestroyOnLoad(gameObject);
         }
 
         public void Update()

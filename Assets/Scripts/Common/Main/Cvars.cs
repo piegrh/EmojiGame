@@ -12,6 +12,7 @@ namespace Ulbe
             if (_Instance != this)
                 return;
             InitCvars();
+            DontDestroyOnLoad(gameObject);
         }
 
         protected void InitCvars()

@@ -35,6 +35,7 @@ namespace Ulbe
             base.Awake();
             if (_Instance != this)
                 return;
+            DontDestroyOnLoad(gameObject);
             cmd_argv = new string[MAX_STRING_TOKENS];
             cmd_functions = new Dictionary<string, Command>(StringComparer.InvariantCultureIgnoreCase);
             Cmd_Init();

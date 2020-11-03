@@ -1,5 +1,4 @@
 ﻿using Ulbe;
-using UnityEngine;
 
 namespace Emojigame
 {
@@ -10,6 +9,14 @@ namespace Emojigame
         public event System.Action<int> OnScore;
         public event System.Action OnReset;
         public event System.Action<int, int, bool> OnGameOver;
+
+        protected override void Awake()
+        {
+            base.Awake();
+            if (_Instance != this)
+                return;
+            DontDestroyOnLoad(gameObject);
+        }
 
         public void GameOver(int score, int celltypes, bool perfect)
         {
