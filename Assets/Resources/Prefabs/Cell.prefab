@@ -254,9 +254,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbe1a8c255051b84d9eccf06dcb531a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  amp: {x: 0, y: 0.05, z: 0}
+  amp: {x: 0.05, y: 0.05, z: 0}
   freq: {x: 1, y: 1, z: 0}
-  offset: {x: 0, y: 0, z: 0}
+  offset: {x: 1, y: 0, z: 0}
   scale: {x: 0, y: 0, z: 0}
 --- !u!114 &7755293710991269665
 MonoBehaviour:
@@ -271,4 +271,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   anagle: 45
-  speed: 10
+  speed: 5

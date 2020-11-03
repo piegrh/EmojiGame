@@ -4,11 +4,11 @@ using UnityEngine;
 public class PauseMenu : GUIPage
 {
     public GameObject prompt;
-    public SettingSlider[] sliders;
+    public UICvarSetting[] cvarSettings;
 
     public void Awake()
     {
-        sliders = GetComponentsInChildren<SettingSlider>();
+        cvarSettings = GetComponentsInChildren<UICvarSetting>();
     }
 
     public void Continue()
@@ -21,8 +21,8 @@ public class PauseMenu : GUIPage
 
     public void ApplyAll()
     {
-        for (int i = 0; i < sliders.Length; i++)
-            sliders[i].Apply();
+        for (int i = 0; i < cvarSettings.Length; i++)
+            cvarSettings[i].Apply();
     }
 
     public void ExitToMain()
@@ -38,14 +38,14 @@ public class PauseMenu : GUIPage
 
     public void ResetAll()
     {
-        for (int i = 0; i < sliders.Length; i++)
-            sliders[i].ResetValue();
+        for (int i = 0; i < cvarSettings.Length; i++)
+            cvarSettings[i].ResetValue();
     }
 
     public bool AllUpdated()
     {
-        for(int i = 0;i < sliders.Length; i++)
-            if (!sliders[i].updated)
+        for(int i = 0;i < cvarSettings.Length; i++)
+            if (!cvarSettings[i].updated)
                 return false;
         return true;
     }
