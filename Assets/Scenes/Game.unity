@@ -7391,7 +7391,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Continue
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1318176888, guid: 91c8885daf4dd8f40808a7c5f6c94dd6, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 91c8885daf4dd8f40808a7c5f6c94dd6, type: 3}
 --- !u!224 &1094212563 stripped
 RectTransform:
@@ -9174,7 +9175,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Exit
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1318176888, guid: 91c8885daf4dd8f40808a7c5f6c94dd6, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 91c8885daf4dd8f40808a7c5f6c94dd6, type: 3}
 --- !u!224 &1613109042 stripped
 RectTransform:

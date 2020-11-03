@@ -3671,6 +3671,8 @@ GameObject:
   - component: {fileID: 1746541521}
   - component: {fileID: 1746541520}
   - component: {fileID: 1746541519}
+  - component: {fileID: 1746541524}
+  - component: {fileID: 1746541523}
   m_Layer: 5
   m_Name: Text
   m_TagString: Untagged
@@ -3796,6 +3798,36 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1746541517}
   m_CullTransparentMesh: 0
+--- !u!114 &1746541523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1746541517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a3a71166d6caf094e817c302dd093322, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anagle: 2
+  speed: 2
+--- !u!114 &1746541524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1746541517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbe1a8c255051b84d9eccf06dcb531a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  amp: {x: 0.2, y: 0.2, z: 0}
+  freq: {x: 2, y: 1, z: 0}
+  offset: {x: 1, y: 0, z: 0}
+  scale: {x: 0, y: 0, z: 0}
 --- !u!1 &1756103190
 GameObject:
   m_ObjectHideFlags: 0
