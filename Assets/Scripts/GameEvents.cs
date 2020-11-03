@@ -1,20 +1,10 @@
-﻿using UnityEngine;
+﻿using Ulbe;
+using UnityEngine;
 
 namespace Emojigame
 {
-    public class GameEvents : MonoBehaviour
+    public class GameEvents : UnitySingleton<GameEvents>
     {
-        private static GameEvents s_instance;
-        public static GameEvents Instance => s_instance ?? new GameObject("GameEvents").AddComponent<GameEvents>();
-
-        private void Awake()
-        {
-            if (s_instance == null)
-                s_instance = this;
-            else
-                Destroy(gameObject);
-        }
-
         public event System.Action<Cell> OnCellClick;
         public event System.Action<int> OnCellSelect;
         public event System.Action<int> OnScore;

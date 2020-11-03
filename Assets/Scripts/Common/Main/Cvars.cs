@@ -2,19 +2,16 @@
 using UnityEngine;
 namespace Ulbe
 {
-    public class Cvars : MonoBehaviour
+    public class Cvars : UnitySingleton<Cvars>
     {
         public Dictionary<string, Cvar> cvarList;
-        private static Cvars s_instance;
-        public static Cvars Instance => s_instance ?? new GameObject("Cvars").AddComponent<Cvars>();
 
-        public void Awake()
+        protected override void Awake()
         {
-            if (s_instance != null)
-                Destroy(gameObject);
+            base.Awake();
+            if (_Instance != this)
+                return;
             InitCvars();
-            s_instance = this;
-            DontDestroyOnLoad(gameObject);
         }
 
         protected void InitCvars()

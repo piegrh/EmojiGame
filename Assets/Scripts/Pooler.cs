@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Ulbe;
 using UnityEngine;
 
 namespace Emojigame
@@ -11,22 +12,15 @@ namespace Emojigame
         public int size;
     }
 
-    public class Pooler : MonoBehaviour
+    public class Pooler : UnitySingleton<Pooler>
     {
-        private static Pooler s_instance;
-        public static Pooler Instance => s_instance ?? new GameObject("Pooler").AddComponent<Pooler>();
         protected Dictionary<string, Queue<GameObject>> poolDic;
         protected Pool<GameObject>[] pools;
 
-        public void Awake()
+        protected override void Awake()
         {
-            if (s_instance != null)
-            {
-                Destroy(gameObject);
-                return;
-            }
+            base.Awake();
 
-            s_instance = this;
             poolDic = new Dictionary<string, Queue<GameObject>>();
 
             pools = new Pool<GameObject>[]
@@ -79,16 +73,6 @@ namespace Emojigame
             if (!poolDic.ContainsKey(prefab) && go != null)
                 return;
             poolDic[prefab].Enqueue(go);
-        }
-
-        private void OnDestroy()
-        {
-            if (s_instance == this)
-            {
-                s_instance = null;
-                Destroy(gameObject);
-                return;
-            }
         }
     }
 }

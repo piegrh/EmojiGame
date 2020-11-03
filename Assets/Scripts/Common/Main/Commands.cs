@@ -18,12 +18,10 @@ namespace Ulbe
         public string value;
     }
 
-    public class Commands : MonoBehaviour
+    public class Commands : UnitySingleton<Commands>
     {
         const int MAX_CMD_LENGTH = 512;
         public Dictionary<string, Command> cmd_functions;
-        private static Commands s_instance;
-        public static Commands Instance => s_instance ?? new GameObject("Commands").AddComponent<Commands>();
         protected const int MAX_STRING_TOKENS = 256;
         protected int cmd_argc;
         protected string cmd_cmd;
@@ -32,15 +30,14 @@ namespace Ulbe
         protected string cmd_text;
         protected int cmd_wait;
 
-        public void Awake()
+        protected override void Awake()
         {
-            if (s_instance != null)
-                Destroy(gameObject);
+            base.Awake();
+            if (_Instance != this)
+                return;
             cmd_argv = new string[MAX_STRING_TOKENS];
             cmd_functions = new Dictionary<string, Command>(StringComparer.InvariantCultureIgnoreCase);
             Cmd_Init();
-            DontDestroyOnLoad(gameObject);
-            s_instance = this;
         }
 
         public void FixedUpdate()

@@ -2,27 +2,22 @@
 using System.Collections.Generic;
 namespace Ulbe
 {
-    public class SoundMaster : MonoBehaviour
+    public class SoundMaster : UnitySingleton<SoundMaster>
     {
         public enum SoundType { SFX, AMBIENT, MUSIC }
         protected Queue<SoundEmitter> queue;
         protected SoundEmitter currentSoundEmitter;
-
-        private static SoundMaster s_instance;
-        public static SoundMaster Instance => s_instance ?? new GameObject("SoundMaster").AddComponent<SoundMaster>();
-
         public Cvar Master { get; set; }
         public Cvar Sfx { get; set; }
         public Cvar Ambient { get; set; }
         public Cvar Music { get; set; }
 
-        private void Awake()
+        protected  override void Awake()
         {
-            if (s_instance != null)
-            {
-                Destroy(gameObject);
+            base.Awake();
+
+            if (_Instance != this)
                 return;
-            }
 
             Music = Cvars.Instance.Get("s_sfx", "1");
             Sfx = Cvars.Instance.Get("s_music", "1");
@@ -30,8 +25,6 @@ namespace Ulbe
             Master = Cvars.Instance.Get("s_volume", "1");
 
             queue = new Queue<SoundEmitter>();
-            s_instance = this;
-            DontDestroyOnLoad(gameObject);
         }
 
         public void Update()

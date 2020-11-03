@@ -1,15 +1,17 @@
 ﻿using UnityEngine;
 namespace Ulbe
 {
-    public class SoundEmitter : MonoBehaviour
+    public class SoundEmitter : UnitySingleton<SoundEmitter>
     {
         public AudioSource src;
         public SoundMaster.SoundType soundType;
         public float BaseVolume { get; set; }
         protected float pitch = 1f;
 
-        protected void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+
             src = GetComponent<AudioSource>();
 
             if (src == null)

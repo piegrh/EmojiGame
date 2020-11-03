@@ -27,7 +27,6 @@ namespace Emojigame
             Levelsize.options = sizeOpts;
             Levelsize.value = Mathf.Clamp(Cvars.Instance.Get("g_levelsize", "3").intValue, 0, cnt);
 
-
             cnt = -1;
             List<Dropdown.OptionData> sizeOptsB = new List<Dropdown.OptionData>();
             foreach (CellGameSettings.Difficulty val in System.Enum.GetValues(typeof(CellGameSettings.Difficulty)))
