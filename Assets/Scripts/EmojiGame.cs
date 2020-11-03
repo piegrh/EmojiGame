@@ -20,8 +20,6 @@ namespace Emojigame
         Dictionary<Cell, CellView> cells;
         int score;
 
-
-
         void Start()
         {
             GameEvents.Instance.OnCellClick += CellClickEvent;
