@@ -338,24 +338,6 @@ namespace Emojigame
         {
             GameEvents.Instance.OnCellClick -= CellClickEvent;
         }
-
-        [ContextMenu("test")]
-        public void TestButton()
-        {
-            CellMap m = new CellMap(10,10);
-
-            for (int y = 0; y < m.LengthY; y++)
-                for (int x = 0; x < m.LengthX; x++)
-                    m.GetCell(x, y).cellType = 0;
-
-            m.GetCell(2, 1).cellType = 1;
-            m.GetCell(2, 2).cellType = 1;
-            m.GetCell(2, 3).cellType = 1;
-
-            m.GetCell(0, 0).cellType = 1;
-
-            AI.CellMapSolver cms = new AI.CellMapSolver(m);
-        }
     }
 
 }

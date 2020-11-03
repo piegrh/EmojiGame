@@ -10,36 +10,38 @@ namespace Emojigame
         public Vector2 Offset { get; protected set; }
         public Vector2 Size { get; protected set; }
 
-        public CellMap(int x, int y)
-        {
-            Size = new Vector2(x, y);
-            map = new Cell[x, y];
-            Offset = Vector2.zero;
-            CellSize = Vector2.zero;
 
-            Init();
-        }
-
-        public CellMap(Vector2 Size, Vector2 Cellsize)
+        public CellMap(Vector2 Area, Vector2 Cellsize)
         {
-            Init(Size, Cellsize);
+            Init(Area, Cellsize);
         }
 
         protected void Init(Vector2 size, Vector2 cellSize)
         {
             Size = size;
             CellSize = cellSize;
+
             Offset = new Vector2(CellSize.x / 2, CellSize.y / 2);
             Size = new Vector2(Size.x / (CellSize.x), Size.y / (CellSize.y));
             map = new Cell[(int)Size.x, (int)Size.y];
-            Init();
+
+            CreateCells();
         }
 
-        protected void Init()
+        protected void CreateCells()
         {
             for (int y = 0; y < Size.y; y++)
                 for (int x = 0; x < Size.x; x++)
                     map[x, y] = new Cell(x, y);
+        }
+
+        public CellMap(int x, int y)
+        {
+            Size = new Vector2(x, y);
+            map = new Cell[x, y];
+            Offset = Vector2.zero;
+            CellSize = Vector2.zero;
+            CreateCells();
         }
 
         // Returns cell that were moved
