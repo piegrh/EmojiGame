@@ -46,30 +46,4 @@ public class SettingSlider : MonoBehaviour
         updated = false;
         Apply();
     }
-
-    public static void ResetAll()
-    {
-        SettingSlider[] sliders = FindObjectsOfType<SettingSlider>();
-        foreach (SettingSlider ss in sliders)
-            ss.ResetValue();
-    }
-
-    public static bool AllUpdated()
-    {
-        SettingSlider[] sliders = FindObjectsOfType<SettingSlider>();
-        foreach (SettingSlider ss in sliders)
-        {
-            if (!ss.updated)
-                return false;
-        }
-        return true;
-    }
-
-    public static void ApplyAll()
-    {
-        SettingSlider[] sliders = FindObjectsOfType<SettingSlider>();
-        foreach (SettingSlider ss in sliders)
-            if (!ss.updated)
-                ss.Apply();
-    }
 }

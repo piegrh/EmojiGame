@@ -44,7 +44,6 @@ namespace Emojigame
         {
             Cvars.Instance.ForceSet("g_difficulty", Difficulty.value.ToString());
             Cvars.Instance.ForceSet("g_levelsize", Levelsize.value.ToString());
-            SettingSlider.ApplyAll();
             UnityEngine.SceneManagement.SceneManager.LoadScene("Game");
         }
 

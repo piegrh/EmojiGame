@@ -13,11 +13,14 @@ namespace Emojigame
         public GameObject cellPrefab;
         public Vector2 padding = new Vector2(0, 0);
         public Sprite[] Sprites { get; protected set; }
+        public AudioClip killSfx;
         CellMap _map;
         Cell selected;
         CellGameSettings settings;
         Dictionary<Cell, CellView> cells;
         int score;
+
+
 
         void Start()
         {
@@ -132,7 +135,6 @@ namespace Emojigame
             GameEvents.Instance.CellSelect(connectedCnt);
         }
 
-        //FIXME
         protected IEnumerator ClickCellCoroutine(Cell c)
         {
             // Draw lines
@@ -152,8 +154,6 @@ namespace Emojigame
             for (int i = 0; i < lines.Count; i++)
                 Destroy(lines[i].gameObject);
 
-            AudioClip clip = Resources.Load<AudioClip>("sound/feedback/kill");
-
             int startY = -1;
             int startX = -1;
             int endX = int.MaxValue;
@@ -169,7 +169,7 @@ namespace Emojigame
 
                 GetView(cell).Explode();
 
-                SoundMaster.Instance.PlayGlobalSound(clip, 0.15f, SoundMaster.SoundType.SFX, Random.Range(1f, 3f));
+                SoundMaster.Instance.PlayGlobalSound(killSfx, 0.15f, SoundMaster.SoundType.SFX, Random.Range(1f, 3f));
                 yield return new WaitForFixedUpdate();
             }
 
@@ -307,7 +307,7 @@ namespace Emojigame
             {
                 Sprites[i] = RandomEmoji.GetRandomEmoji();
                 if (!added.Add(Sprites[i].name))
-                    i--; // sprite is already added, get a new one
+                    i--; // sprite already added, get a new one
             }
         }
 

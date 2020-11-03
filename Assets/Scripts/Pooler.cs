@@ -14,7 +14,7 @@ namespace Emojigame
     public class Pooler : MonoBehaviour
     {
         private static Pooler s_instance;
-        public static Pooler Instance => s_instance ?? new GameObject("GameManager").AddComponent<Pooler>();
+        public static Pooler Instance => s_instance ?? new GameObject("Pooler").AddComponent<Pooler>();
         protected Dictionary<string, Queue<GameObject>> poolDic;
         protected Pool<GameObject>[] pools;
 
@@ -34,7 +34,6 @@ namespace Emojigame
             new Pool<GameObject>() { size = 25, tag = "explode", prefab = Resources.Load<GameObject>("prefabs/DeathFX") },
             };
 
-            // Instantiate
             for (int i = 0; i < pools.Length; i++)
             {
                 Queue<GameObject> q = new Queue<GameObject>();
@@ -44,7 +43,6 @@ namespace Emojigame
                     go.SetActive(false);
                     q.Enqueue(go);
                 }
-
                 poolDic.Add(pools[i].tag, q);
             }
         }

@@ -8600,6 +8600,7 @@ MonoBehaviour:
   cellPrefab: {fileID: 295455890453431376, guid: ee147dd4063f7cd4891c5a5ebb53a002,
     type: 3}
   padding: {x: 5, y: 5}
+  killSfx: {fileID: 8300000, guid: 98d881f6a2f66d24fa89e15b25b95921, type: 3}
 --- !u!4 &1520680215
 Transform:
   m_ObjectHideFlags: 0

@@ -16,5 +16,4 @@ namespace Emojigame
         }
         public bool IsEmpty { get { return cellType == NONE; } }
     }
-
 }
