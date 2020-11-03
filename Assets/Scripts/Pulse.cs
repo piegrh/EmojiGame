@@ -10,8 +10,8 @@ public class Pulse : MonoBehaviour
     
     void Start()
     {
-        scale = transform.localScale;
         _transform = transform;
+        scale = _transform.localScale;
     }
 
     void Update()
@@ -25,5 +25,10 @@ public class Pulse : MonoBehaviour
     protected static float PulseFunc(float time, float freq, float amp, float offset)
     {
         return (amp * (1 + Mathf.Sin(((1f * Mathf.PI * freq * time) + offset))));
+    }
+
+    private void OnDisable()
+    {
+        _transform.localScale = scale;
     }
 }

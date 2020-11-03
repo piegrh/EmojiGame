@@ -48,8 +48,6 @@ namespace Emojigame
             Transform tParent = gamePanel.transform;
             CellView cv;
 
-
-
             for (int y = 0; y < _map.LengthY; y++)
             {
                 for (int x = 0; x < _map.LengthX; x++)

@@ -59,12 +59,12 @@ namespace Emojigame
         public void Explode()
         {
             Vector3 size = _transform.sizeDelta;
-            ParticleSystem g = Instantiate(DeathFX, transform.parent);
+            ParticleSystem g = Pooler.Instance.Dequeue("explode",_transform.position).GetComponent<ParticleSystem>();
+            g.Clear();
             g.Play(true);
             g.transform.position = new Vector3(transform.position.x, transform.position.y, 1);
             g.transform.localScale = new Vector3(size.x * 0.05f, size.y * 0.05f, 1);
             Hide();
-            Destroy(g, 5f);
         }
 
         public void SetPosition(Vector3 pos)
