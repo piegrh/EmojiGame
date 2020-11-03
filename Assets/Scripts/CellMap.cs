@@ -3,20 +3,22 @@ using UnityEngine;
 
 namespace Emojigame
 { 
-    public struct CellGameSettings
-    {
-        public enum LevelSize { Small = 0, Normal, Big, Huge, Ginormous, Extreme, GIGANTISCH};
-        public enum Difficulty { Normal = 0, Intermediate, Hard, Nightmare, UltraNightmare };
-        public LevelSize size;
-        public Difficulty difficulty;
-    }
-
     public class CellMap
     {
         protected Cell[,] map;
         public Vector2 CellSize { get; protected set; } = new Vector2(100, 100);
         public Vector2 Offset { get; protected set; }
         public Vector2 Size { get; protected set; }
+
+        public CellMap(int x, int y)
+        {
+            Size = new Vector2(x, y);
+            map = new Cell[x, y];
+            Offset = Vector2.zero;
+            CellSize = Vector2.zero;
+
+            Init();
+        }
 
         public CellMap(Vector2 Size, Vector2 Cellsize)
         {
@@ -27,16 +29,20 @@ namespace Emojigame
         {
             Size = size;
             CellSize = cellSize;
-
             Offset = new Vector2(CellSize.x / 2, CellSize.y / 2);
             Size = new Vector2(Size.x / (CellSize.x), Size.y / (CellSize.y));
             map = new Cell[(int)Size.x, (int)Size.y];
+            Init();
+        }
 
+        protected void Init()
+        {
             for (int y = 0; y < Size.y; y++)
                 for (int x = 0; x < Size.x; x++)
                     map[x, y] = new Cell(x, y);
         }
 
+        // Returns cell that were moved
         public virtual Cell[] ShiftDown(int startX, int endX, int startY)
         {
             startY = Mathf.Clamp(startY, 0, LengthY - 2);
@@ -74,6 +80,7 @@ namespace Emojigame
             return movedCellsY.ToArray();
         }
 
+        // Returns cell that were moved
         public virtual Cell[] ShiftLeft(int startY)
         {
             startY = Mathf.Clamp(startY, 0, LengthY - 2);
@@ -109,18 +116,23 @@ namespace Emojigame
         {
             List<Cell> cells = new List<Cell>();
             Cell temp;
+
             // right
-            if ((temp = GetCell(c.pos.x + 1, c.pos.y + 0)) != null && temp.cellType == c.cellType)
+            if ((temp = GetCell(c.pos.x + 1, c.pos.y + 0)) != null && temp.SameType(c))
                 cells.Add(temp);
+
             // left
-            if ((temp = GetCell(c.pos.x - 1, c.pos.y + 0)) != null && temp.cellType == c.cellType)
+            if ((temp = GetCell(c.pos.x - 1, c.pos.y + 0)) != null && temp.SameType(c))
                 cells.Add(temp);
+
             // Up
-            if ((temp = GetCell(c.pos.x + 0, c.pos.y - 1)) != null && temp.cellType == c.cellType)
+            if ((temp = GetCell(c.pos.x + 0, c.pos.y - 1)) != null && temp.SameType(c))
                 cells.Add(temp);
+
             // Down
-            if ((temp = GetCell(c.pos.x + 0, c.pos.y + 1)) != null && temp.cellType == c.cellType)
+            if ((temp = GetCell(c.pos.x + 0, c.pos.y + 1)) != null && temp.SameType(c))
                 cells.Add(temp);
+
             return cells.ToArray();
         }
 
@@ -159,6 +171,14 @@ namespace Emojigame
         public int LengthY
         {
             get { return map.GetLength(1); }
+        }
+
+        public int Count
+        {
+            get
+            {
+                return LengthX * LengthY;
+            }
         }
 
         public Vector3 GetCanvasPosition(Vector2Int pos)

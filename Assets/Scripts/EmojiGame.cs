@@ -5,6 +5,14 @@ using Ulbe;
 
 namespace Emojigame
 {
+    public struct CellGameSettings
+    {
+        public enum LevelSize { Small = 0, Normal, Big, Huge, Ginormous, Extreme, GIGANTISCH };
+        public enum Difficulty { Normal = 0, Intermediate, Hard, Nightmare, UltraNightmare };
+        public LevelSize size;
+        public Difficulty difficulty;
+    }
+
     public class EmojiGame : MonoBehaviour
     {
         protected enum GameState { WaitForClick, Selected, Clicked, GameOver }
@@ -161,14 +169,10 @@ namespace Emojigame
                 // Get upper and lower x bounds to avoid checking unaffected rows
                 startX = cell.pos.x > startX ? cell.pos.x : startX;
                 endX = cell.pos.x < endX ? cell.pos.x : endX;
-               
                 // Get lower y bounds.
                 startY = cell.pos.y > startY ? cell.pos.y : startY;
-
                 GetView(cell).Explode();
-
                 SoundMaster.Instance.PlayGlobalSound(killSfx, 0.15f, SoundMaster.SoundType.SFX, Random.Range(1f, 3f));
-
                 yield return new WaitForFixedUpdate();
             }
 
@@ -333,6 +337,24 @@ namespace Emojigame
         private void OnDestroy()
         {
             GameEvents.Instance.OnCellClick -= CellClickEvent;
+        }
+
+        [ContextMenu("test")]
+        public void TestButton()
+        {
+            CellMap m = new CellMap(10,10);
+
+            for (int y = 0; y < m.LengthY; y++)
+                for (int x = 0; x < m.LengthX; x++)
+                    m.GetCell(x, y).cellType = 0;
+
+            m.GetCell(2, 1).cellType = 1;
+            m.GetCell(2, 2).cellType = 1;
+            m.GetCell(2, 3).cellType = 1;
+
+            m.GetCell(0, 0).cellType = 1;
+
+            AI.CellMapSolver cms = new AI.CellMapSolver(m);
         }
     }
 

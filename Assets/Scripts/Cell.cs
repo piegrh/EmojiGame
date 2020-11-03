@@ -15,5 +15,6 @@ namespace Emojigame
             this.cellType = cellType;
         }
         public bool IsEmpty { get { return cellType == NONE; } }
+        public bool SameType(Cell c) { return c.cellType == cellType; }
     }
 }
