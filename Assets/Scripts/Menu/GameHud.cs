@@ -19,7 +19,8 @@ namespace Emojigame
             GameEvents.Instance.OnScore += SetScore;
             GameEvents.Instance.OnCellSelect += CellSelection;
             GameEvents.Instance.OnReset += ResetGame;
-            SetScore(0);
+
+            ResetGame();
         }
 
         void SetScore(int s)
@@ -47,7 +48,6 @@ namespace Emojigame
         protected int GetSpeed(int v)
         {
             const int den = 10;
-
             int value = v / den;
             return value > 0 ? value : v % den;
         }
@@ -66,7 +66,7 @@ namespace Emojigame
         {
             addValue = 0;
             score = 0;
-            SetScore(0);
+            scoreText.text = "0";
         }
 
         private void OnDestroy()
