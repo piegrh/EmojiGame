@@ -29,6 +29,7 @@ public class Pulse : MonoBehaviour
 
     private void OnDisable()
     {
-        _transform.localScale = scale;
+        if(_transform != null)
+            _transform.localScale = scale;
     }
 }

@@ -521,7 +521,7 @@ SpriteRenderer:
   m_Size: {x: 1.28, y: 1.28}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
-  m_WasSpriteAssigned: 1
+  m_WasSpriteAssigned: 0
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
 --- !u!114 &95033507
@@ -9064,9 +9064,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3293040726063303944, guid: 91c8885daf4dd8f40808a7c5f6c94dd6,
         type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3293040726063303944, guid: 91c8885daf4dd8f40808a7c5f6c94dd6,
+        type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 906671209}
+    - target: {fileID: 3293040726063303944, guid: 91c8885daf4dd8f40808a7c5f6c94dd6,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: StartGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 3293040726063303944, guid: 91c8885daf4dd8f40808a7c5f6c94dd6,
+        type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 3293040726063303945, guid: 91c8885daf4dd8f40808a7c5f6c94dd6,
         type: 3}
       propertyPath: m_LocalPosition.x

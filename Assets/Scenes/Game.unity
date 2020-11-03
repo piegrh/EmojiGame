@@ -5136,6 +5136,7 @@ GameObject:
   - component: {fileID: 200316738}
   - component: {fileID: 200316737}
   - component: {fileID: 200316741}
+  - component: {fileID: 200316742}
   m_Layer: 5
   m_Name: Tip
   m_TagString: Untagged
@@ -5275,6 +5276,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: menutip
   time: 4
+--- !u!114 &200316742
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 200316735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbe1a8c255051b84d9eccf06dcb531a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  amp: {x: 0.05, y: 0.05, z: 0}
+  freq: {x: 1, y: 1, z: 0}
+  offset: {x: 0, y: 1, z: 0}
+  scale: {x: 0, y: 0, z: 0}
 --- !u!1 &227179270 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 942867515686774944, guid: 42f4832a365bb3842afd558530b67658,
@@ -5539,7 +5556,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.48538178, g: 0.41362584, b: 0.5188679, a: 1}
+  m_BackGroundColor: {r: 0.8117647, g: 0.41568628, b: 0.5764706, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -5858,7 +5875,7 @@ GameObject:
   - component: {fileID: 618541110}
   - component: {fileID: 618541109}
   m_Layer: 5
-  m_Name: Text
+  m_Name: yes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6304,7 +6321,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.4862745, g: 0.41568628, b: 0.52156866, a: 1}
+  m_Color: {r: 0.8117647, g: 0.41568628, b: 0.5764706, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -6455,6 +6472,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1473334457}
     m_Modifications:
+    - target: {fileID: 3293040724709226170, guid: 91c8885daf4dd8f40808a7c5f6c94dd6,
+        type: 3}
+      propertyPath: m_Name
+      value: apply
+      objectReference: {fileID: 0}
     - target: {fileID: 3293040726063303944, guid: 91c8885daf4dd8f40808a7c5f6c94dd6,
         type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -6937,7 +6959,7 @@ GameObject:
   - component: {fileID: 1001210007}
   - component: {fileID: 1001210006}
   m_Layer: 5
-  m_Name: Text
+  m_Name: applyquestion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7072,7 +7094,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.4862745, g: 0.4117647, b: 0.5176471, a: 1}
+  m_Color: {r: 0.8117647, g: 0.41568628, b: 0.5764706, a: 1}
   m_RaycastTarget: 1
   m_Maskable: 1
   m_OnCullStateChanged:
@@ -7202,6 +7224,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1473334457}
     m_Modifications:
+    - target: {fileID: 3293040724709226170, guid: 91c8885daf4dd8f40808a7c5f6c94dd6,
+        type: 3}
+      propertyPath: m_Name
+      value: continue
+      objectReference: {fileID: 0}
     - target: {fileID: 3293040724709226172, guid: 91c8885daf4dd8f40808a7c5f6c94dd6,
         type: 3}
       propertyPath: m_Text
@@ -7368,7 +7395,7 @@ GameObject:
   - component: {fileID: 1098998351}
   - component: {fileID: 1098998350}
   m_Layer: 5
-  m_Name: Text
+  m_Name: settings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7937,6 +7964,8 @@ GameObject:
   - component: {fileID: 1355332432}
   - component: {fileID: 1355332431}
   - component: {fileID: 1355332430}
+  - component: {fileID: 1355332436}
+  - component: {fileID: 1355332435}
   m_Layer: 5
   m_Name: SettingsButton
   m_TagString: Untagged
@@ -8085,6 +8114,65 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1355332428}
   m_CullTransparentMesh: 0
+--- !u!114 &1355332435
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1355332428}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbe1a8c255051b84d9eccf06dcb531a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  amp: {x: 0.01, y: 0.01, z: 0}
+  freq: {x: 1, y: 1, z: 0}
+  offset: {x: 1, y: 0, z: 0}
+  scale: {x: 0, y: 0, z: 0}
+--- !u!114 &1355332436
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1355332428}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0b148fe25e99eb48b9724523833bab1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Delegates:
+  - eventID: 0
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1355332435}
+          m_MethodName: set_enabled
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 1
+          m_CallState: 2
+  - eventID: 1
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 1355332435}
+          m_MethodName: set_enabled
+          m_Mode: 6
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
 --- !u!114 &1365708444 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 942867517295053957, guid: 42f4832a365bb3842afd558530b67658,
@@ -8668,7 +8756,7 @@ GameObject:
   - component: {fileID: 1536462396}
   - component: {fileID: 1536462398}
   m_Layer: 5
-  m_Name: Text
+  m_Name: changeEmojis
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8898,6 +8986,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1473334457}
     m_Modifications:
+    - target: {fileID: 3293040724709226170, guid: 91c8885daf4dd8f40808a7c5f6c94dd6,
+        type: 3}
+      propertyPath: m_Name
+      value: exit
+      objectReference: {fileID: 0}
     - target: {fileID: 3293040724709226172, guid: 91c8885daf4dd8f40808a7c5f6c94dd6,
         type: 3}
       propertyPath: m_Text
@@ -9537,7 +9630,7 @@ GameObject:
   - component: {fileID: 1872539913}
   - component: {fileID: 1872539912}
   m_Layer: 5
-  m_Name: Text
+  m_Name: no
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

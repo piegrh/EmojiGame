@@ -19,8 +19,8 @@ namespace Ulbe
             if (_Instance != this)
                 return;
 
-            Music = Cvars.Instance.Get("s_sfx", "1");
-            Sfx = Cvars.Instance.Get("s_music", "1");
+            Music = Cvars.Instance.Get("s_music", "1");
+            Sfx = Cvars.Instance.Get("s_sfx", "1");
             Ambient = Cvars.Instance.Get("s_ambient", "1");
             Master = Cvars.Instance.Get("s_volume", "1");
 
