@@ -164,6 +164,9 @@ namespace Emojigame
             int startX = -1;
             int endX = int.MaxValue;
 
+            int _score = GameScorer.GetScore(explorer.visited.Length);
+
+            int add = _score / explorer.visited.Length;
             foreach (Cell cell in explorer.visited)
             {
                 // Get upper and lower x bounds to avoid checking unaffected rows
@@ -172,11 +175,12 @@ namespace Emojigame
                 // Get lower y bounds.
                 startY = cell.pos.y > startY ? cell.pos.y : startY;
                 GetView(cell).Explode();
+                AddScore(add);
                 SoundMaster.Instance.PlayGlobalSound(killSfx, 0.15f, SoundMaster.SoundType.SFX, Random.Range(1f, 3f));
                 yield return new WaitForFixedUpdate();
             }
 
-            AddScore(GameScorer.GetScore(explorer.visited.Length));
+            AddScore(_score % explorer.visited.Length);
 
             // Update map
             Cell[] movedCellsY = _map.ShiftDown(startX, endX, startY);
@@ -260,6 +264,8 @@ namespace Emojigame
 
         protected void AddScore(int s)
         {
+            if (s == 0)
+                return;
             score += s;
             GameEvents.Instance.Score(s);
         }

@@ -12,6 +12,8 @@ namespace Emojigame
         int score = 0;
         int addValue = 0;
 
+        [SerializeField] public Pulse pulse;
+
         void Start()
         {
             GameEvents.Instance.OnScore += SetScore;
@@ -30,18 +32,21 @@ namespace Emojigame
 
         protected IEnumerator CountUpCoroutine()
         {
-            while (addValue >= 0)
+            while (addValue > 0)
             {
+                pulse.enabled = true;
                 scoreText.text = (score - addValue).ToString();
                 yield return new WaitForFixedUpdate();
                 addValue -= GetSpeed(addValue);
             }
+
+            pulse.enabled = false;
             addValue = 0;
         }
 
         protected int GetSpeed(int v)
         {
-            const int den = 50;
+            const int den = 10;
 
             int value = v / den;
             return value > 0 ? value : v % den;

@@ -157,6 +157,7 @@ GameObject:
   - component: {fileID: 63322926}
   - component: {fileID: 63322924}
   - component: {fileID: 63322925}
+  - component: {fileID: 63322928}
   m_Layer: 5
   m_Name: score
   m_TagString: Untagged
@@ -235,10 +236,26 @@ RectTransform:
   m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -140, y: 218}
-  m_SizeDelta: {x: 264.04974, y: 30}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0, y: 0.5}
+  m_AnchoredPosition: {x: -272.0249, y: 218}
+  m_SizeDelta: {x: 314.04974, y: 30}
+  m_Pivot: {x: 0, y: 0.5}
+--- !u!114 &63322928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 63322923}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbe1a8c255051b84d9eccf06dcb531a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  amp: {x: 0.1, y: 0.1, z: 0}
+  freq: {x: 15, y: 15, z: 0}
+  offset: {x: 0, y: 0, z: 0}
+  scale: {x: 0, y: 0, z: 0}
 --- !u!1 &103191779
 GameObject:
   m_ObjectHideFlags: 0
@@ -5845,7 +5862,7 @@ MonoBehaviour:
     m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
     m_FontSize: 20
     m_FontStyle: 0
-    m_BestFit: 0
+    m_BestFit: 1
     m_MinSize: 2
     m_MaxSize: 40
     m_Alignment: 6
@@ -8743,6 +8760,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scoreText: {fileID: 63322924}
   selectionValue: {fileID: 812037306}
+  pulse: {fileID: 63322928}
 --- !u!1 &1536462394
 GameObject:
   m_ObjectHideFlags: 0
