@@ -168,6 +168,7 @@ namespace Emojigame
                 GetView(cell).Explode();
 
                 SoundMaster.Instance.PlayGlobalSound(killSfx, 0.15f, SoundMaster.SoundType.SFX, Random.Range(1f, 3f));
+
                 yield return new WaitForFixedUpdate();
             }
 
