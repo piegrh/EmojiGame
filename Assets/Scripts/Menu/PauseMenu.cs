@@ -1,52 +1,55 @@
 ﻿using Ulbe;
 using UnityEngine;
 
-public class PauseMenu : GUIPage
+namespace Emojigame.Menu
 {
-    public GameObject prompt;
-    public UICvarSetting[] cvarSettings;
-
-    public void Awake()
+    public class PauseMenu : GUIPage
     {
-        cvarSettings = GetComponentsInChildren<UICvarSetting>();
-    }
+        public GameObject prompt;
+        public UICvarSetting[] cvarSettings;
 
-    public void Continue()
-    {
-        if (AllUpdated())
-            Back();
-        else
-            prompt.SetActive(true);
-    }
+        public void Awake()
+        {
+            cvarSettings = GetComponentsInChildren<UICvarSetting>();
+        }
 
-    public void ApplyAll()
-    {
-        for (int i = 0; i < cvarSettings.Length; i++)
-            cvarSettings[i].Apply();
-    }
+        public void Continue()
+        {
+            if (AllUpdated())
+                Back();
+            else
+                prompt.SetActive(true);
+        }
 
-    public void ExitToMain()
-    {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Main");
-    }
+        public void ApplyAll()
+        {
+            for (int i = 0; i < cvarSettings.Length; i++)
+                cvarSettings[i].Apply();
+        }
 
-    public override void Back()
-    {
-        ResetAll();
-        base.Back();
-    }
+        public void ExitToMain()
+        {
+            UnityEngine.SceneManagement.SceneManager.LoadScene("Main");
+        }
 
-    public void ResetAll()
-    {
-        for (int i = 0; i < cvarSettings.Length; i++)
-            cvarSettings[i].ResetValue();
-    }
+        public override void Back()
+        {
+            ResetAll();
+            base.Back();
+        }
 
-    public bool AllUpdated()
-    {
-        for(int i = 0;i < cvarSettings.Length; i++)
-            if (!cvarSettings[i].updated)
-                return false;
-        return true;
+        public void ResetAll()
+        {
+            for (int i = 0; i < cvarSettings.Length; i++)
+                cvarSettings[i].ResetValue();
+        }
+
+        public bool AllUpdated()
+        {
+            for (int i = 0; i < cvarSettings.Length; i++)
+                if (!cvarSettings[i].updated)
+                    return false;
+            return true;
+        }
     }
 }

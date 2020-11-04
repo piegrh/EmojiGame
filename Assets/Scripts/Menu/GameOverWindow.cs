@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Emojigame
+namespace Emojigame.Menu
 {
     public class GameOverWindow : MonoBehaviour
     {
@@ -24,13 +24,10 @@ namespace Emojigame
 
         public void SetScoreTable(int baseScore, int celltypes, bool bonus)
         {
-            string s = string.Format(
-                    "Base Score: {0}\nElimination Bonus: {1}\n^6Final Score: {2}",
-                    baseScore.ToString(),
-                    bonus ? string.Format("x{0}", celltypes) : "None",
-                    GameScorer.FinalScore(baseScore, celltypes, bonus)
-                );
-            ScoreBox.text = ColorString.ColorizeString(s);
+            string bonusmsg = bonus ? string.Format("x{0}", celltypes) : "None";
+            string finalScore = GameScorer.FinalScore(baseScore, celltypes, bonus).ToString();
+            string msg = $"Base Score: {baseScore}\nElimination Bonus: {bonusmsg}\n^6Final Score: {finalScore}";
+            ScoreBox.text = ColorString.ColorizeString(msg);
             SetEnable(true);
         }
 

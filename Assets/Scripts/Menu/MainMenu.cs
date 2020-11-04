@@ -3,7 +3,7 @@ using Ulbe;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Emojigame
+namespace Emojigame.Menu
 {
 
     public class MainMenu : MonoBehaviour

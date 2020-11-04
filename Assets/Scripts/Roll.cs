@@ -1,23 +1,26 @@
 ﻿using UnityEngine;
 
-public class Roll : MonoBehaviour
+namespace Emojigame.Effects
 {
-    public float anagle = 45f;
-    public float speed = 10f;
-
-    Transform _transform;
-    public void Awake()
+    public class Roll : MonoBehaviour
     {
-        _transform = transform;
-    }
+        public float anagle = 45f;
+        public float speed = 10f;
 
-    void Update()
-    {
-        _transform.rotation = Quaternion.Euler(0, 0, anagle * Mathf.Sin(Time.time * speed));
-    }
+        Transform _transform;
+        public void Awake()
+        {
+            _transform = transform;
+        }
 
-    private void OnDisable()
-    {
-        _transform.rotation = Quaternion.identity;
+        void Update()
+        {
+            _transform.rotation = Quaternion.Euler(0, 0, anagle * Mathf.Sin(Time.time * speed));
+        }
+
+        private void OnDisable()
+        {
+            _transform.rotation = Quaternion.identity;
+        }
     }
 }

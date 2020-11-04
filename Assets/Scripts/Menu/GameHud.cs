@@ -1,9 +1,10 @@
-﻿using System.Collections;
+﻿using Emojigame.Effects;
+using System.Collections;
 using Ulbe;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Emojigame
+namespace Emojigame.UI
 {
     public class GameHud : MonoBehaviour
     {

@@ -10,6 +10,7 @@ namespace Emojigame
         public void Awake()
         {
             GetComponent<SpriteRenderer>().sprite = GetRandomEmoji();
+            Destroy(this);
         }
 
         public static Sprite GetRandomEmoji()

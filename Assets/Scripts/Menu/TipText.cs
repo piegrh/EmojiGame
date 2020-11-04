@@ -1,26 +1,29 @@
 ﻿using Ulbe;
 using UnityEngine;
 
-public class TipText : MonoBehaviour
+namespace Emojigame.UI
 {
-    public string id;
-    public float time;
-    protected string cvarname;
-
-    public void Awake()
+    public class TipText : MonoBehaviour
     {
-        cvarname = string.Format("tooltip_{0}", id);
-        Cvars.Instance.Get(cvarname, "0", Cvar.CvarFlags.ROM);
-    }
+        public string id;
+        public float time;
+        protected string cvarname;
 
-    private void Start()
-    {
-        if (!Cvars.Instance.Cvar_Find(cvarname).BoolValue)
+        public void Awake()
         {
-            Cvars.Instance.ForceSet(cvarname, "1");
-            Destroy(gameObject, time);
-            return;
+            cvarname = string.Format("tooltip_{0}", id);
+            Cvars.Instance.Get(cvarname, "0", Cvar.CvarFlags.ROM);
         }
-        Destroy(gameObject);
+
+        private void Start()
+        {
+            if (!Cvars.Instance.Cvar_Find(cvarname).BoolValue)
+            {
+                Cvars.Instance.ForceSet(cvarname, "1");
+                Destroy(gameObject, time);
+                return;
+            }
+            Destroy(gameObject);
+        }
     }
 }

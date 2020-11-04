@@ -1,27 +1,32 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class PrefabSpawner : MonoBehaviour
+namespace Emojigame.Menu
 {
-    public GameObject prefab;
-    public int cnt = 1;
-    public float delay = 0;
-
-    private void Awake()
+    public class PrefabSpawner : MonoBehaviour
     {
-        StartCoroutine(Spawn());
-    }
+        public GameObject prefab;
+        public int cnt = 1;
+        public float delay = 0;
 
-    protected virtual IEnumerator Spawn()
-    {
-        GameObject g;
-        for (int i = 0; i < cnt; i++)
+        private void Awake()
         {
-            g = Instantiate(prefab);
-            if(delay > 0.01)
-                yield return new WaitForSeconds(delay);
-            g.GetComponent<Rigidbody2D>().angularVelocity = 1000f * Random.value;
+            StartCoroutine(Spawn());
         }
-        Destroy(this);
+
+        protected virtual IEnumerator Spawn()
+        {
+            GameObject g;
+            for (int i = 0; i < cnt; i++)
+            {
+                g = Instantiate(prefab);
+                if (delay > 0.01)
+                    yield return new WaitForSeconds(delay);
+                g.GetComponent<Rigidbody2D>().angularVelocity = 1000f * Random.value;
+            }
+            Destroy(this);
+        }
     }
+
 }
+
