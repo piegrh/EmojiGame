@@ -128,25 +128,25 @@ namespace Emojigame
         protected virtual void GameOver()
         {
             state = GameState.GameOver;
-            bool perfect = IsPerfectGame();
+            bool perfect = IsPerfectGame(_map);
             GameEvents.Instance.GameOver(score, Sprites.Length, perfect);
             if (perfect)
                 SoundMaster.Instance.PlayGlobalSound(Resources.Load<AudioClip>("sound/feedback/perfect"), 0.5f);
         }
 
-        protected bool IsPerfectGame()
+        public static bool IsPerfectGame(CellMap map)
         {
-            return _map.GetCell(0, _map.LengthY - 1).IsEmpty;
+            return map.GetCell(0, map.LengthY - 1).IsEmpty;
         }
 
-        protected bool IsGameOver()
+        public static bool IsGameOver(CellMap map)
         {
-            for (int y = 0; y < _map.LengthY; y++)
+            for (int y = 0; y < map.LengthY; y++)
             {
-                for (int x = 0; x < _map.LengthX; x++)
+                for (int x = 0; x < map.LengthX; x++)
                 {
-                    Cell c = _map.GetCell(x, y);
-                    if (c != null && !c.IsEmpty && _map.HasNeighbours(c))
+                    Cell c = map.GetCell(x, y);
+                    if (c != null && !c.IsEmpty && map.HasNeighbours(c))
                         return false;
                 }
             }
@@ -187,6 +187,7 @@ namespace Emojigame
             int _score = GameScorer.GetScore(explorer.visited.Length);
 
             int add = _score / explorer.visited.Length;
+
             foreach (Cell cell in explorer.visited)
             {
                 // Get upper and lower x bounds to avoid checking unaffected rows
@@ -204,7 +205,7 @@ namespace Emojigame
 
             // Update map
             Cell[] movedCellsY = _map.ShiftDown(startX, endX, startY);
-            Cell[] movedCellsX = _map.ShiftLeft(startY);
+            Cell[] movedCellsX = _map.ShiftLeft(endX);
 
             List<Cell> movingCells = new List<Cell>();
 
@@ -236,7 +237,7 @@ namespace Emojigame
 
             state = GameState.WaitForClick;
 
-            if (IsGameOver())
+            if (IsGameOver(_map))
                 GameOver();
         }
 

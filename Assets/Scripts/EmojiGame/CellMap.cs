@@ -44,6 +44,11 @@ namespace Emojigame
             CreateCells();
         }
 
+        public virtual Cell[] ShiftDown()
+        {
+            return ShiftDown(LengthX-1,0, LengthY - 2);
+        }
+
         // Returns cell that were moved
         public virtual Cell[] ShiftDown(int startX, int endX, int startY)
         {
@@ -83,13 +88,11 @@ namespace Emojigame
         }
 
         // Returns cell that were moved
-        public virtual Cell[] ShiftLeft(int startY)
+        public virtual Cell[] ShiftLeft(int startX = 0)
         {
-            startY = Mathf.Clamp(startY, 0, LengthY - 2);
             List<Cell> movedCellsX = new List<Cell>();
-      
             // Move Horizontal
-            for (int x = 0; x < LengthX; x++)
+            for (int x = startX; x < LengthX; x++)
             {
                 Cell temp = GetCell(x, LengthY - 1);
                 if (temp.IsEmpty)
