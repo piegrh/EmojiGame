@@ -1,7 +1,7 @@
 ﻿using Ulbe;
 using UnityEngine;
 
-namespace Emojigame.Menu
+namespace Emojigame.UI.Menu
 {
     public class PauseMenu : GUIPage
     {

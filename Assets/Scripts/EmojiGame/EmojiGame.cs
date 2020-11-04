@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Collections;
 using Ulbe;
+using Emojigame.Effects;
 
 namespace Emojigame
 {
@@ -133,6 +134,25 @@ namespace Emojigame
                 SoundMaster.Instance.PlayGlobalSound(Resources.Load<AudioClip>("sound/feedback/perfect"), 0.5f);
         }
 
+        protected bool IsPerfectGame()
+        {
+            return _map.GetCell(0, _map.LengthY - 1).IsEmpty;
+        }
+
+        protected bool IsGameOver()
+        {
+            for (int y = 0; y < _map.LengthY; y++)
+            {
+                for (int x = 0; x < _map.LengthX; x++)
+                {
+                    Cell c = _map.GetCell(x, y);
+                    if (c != null && !c.IsEmpty && _map.HasNeighbours(c))
+                        return false;
+                }
+            }
+            return true;
+        }
+
         protected void Select(Cell c)
         {
             int connectedCnt = SelectConnectedCells(c);
@@ -238,30 +258,6 @@ namespace Emojigame
             movingCells.Remove(c.cell);
         }
 
-        protected bool IsPerfectGame()
-        {
-            return _map.GetCell(0, _map.LengthY - 1).IsEmpty;
-        }
-
-        protected bool IsGameOver()
-        {
-            for (int y = 0; y < _map.LengthY; y++)
-            {
-                for (int x = 0; x < _map.LengthX; x++)
-                {
-                    Cell c = _map.GetCell(x, y);
-                    if (c != null && !c.IsEmpty && _map.HasNeighbours(c))
-                        return false;
-                }
-            }
-            return true;
-        }
-
-        public void ResetGameButton()
-        {
-            ResetGame();
-        }
-
         protected void AddScore(int s)
         {
             if (s == 0)
@@ -272,7 +268,7 @@ namespace Emojigame
 
         public void ChangeAllCellSprites()
         {
-            GetNewEmojiSprites();
+            SetNewEmojiSprites();
             Cell temp;
             for (int y = 0; y < _map.Size.y; y++)
             {
@@ -309,7 +305,7 @@ namespace Emojigame
             return CellMapExplorer.Explore(_map, c).Contains(c) && c.seleted;
         }
 
-        protected void GetNewEmojiSprites()
+        protected void SetNewEmojiSprites()
         {
             HashSet<string> added = new HashSet<string>();
             for (int i = 0; i < Sprites.Length; i++)

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Emojigame.Effects;
+using UnityEngine;
 
 namespace Emojigame
 {

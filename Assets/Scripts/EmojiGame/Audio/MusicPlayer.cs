@@ -2,7 +2,7 @@
 using System.Collections;
 using Ulbe;
 
-namespace Emojigame
+namespace Emojigame.Audio
 {
     public class MusicPlayer : MonoBehaviour
     {

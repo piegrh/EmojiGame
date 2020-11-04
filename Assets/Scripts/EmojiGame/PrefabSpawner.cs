@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace Emojigame.Menu
+namespace Emojigame
 {
     public class PrefabSpawner : MonoBehaviour
     {

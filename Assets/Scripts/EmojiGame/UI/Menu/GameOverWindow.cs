@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Emojigame.Menu
+namespace Emojigame.UI.Menu
 {
     public class GameOverWindow : MonoBehaviour
     {
