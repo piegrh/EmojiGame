@@ -2,7 +2,7 @@
 using UnityEngine.EventSystems;
 
 
-namespace Ulbe
+namespace Ulbe.UI
 {
     public class ButtonSfx : MonoBehaviour, IPointerEnterHandler, IPointerClickHandler
     {

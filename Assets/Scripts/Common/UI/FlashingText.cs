@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace Ulbe
+namespace Ulbe.UI
 {
     public class FlashingText : MonoBehaviour
     {

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Ulbe
+namespace Ulbe.UI
 {
     public abstract class UICvarSetting : MonoBehaviour
     {

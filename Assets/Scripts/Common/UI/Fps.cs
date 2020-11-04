@@ -2,7 +2,7 @@
 using UnityEngine.UI;
 
 
-namespace Ulbe
+namespace Ulbe.UI
 {
     public class Fps : MonoBehaviour
     {

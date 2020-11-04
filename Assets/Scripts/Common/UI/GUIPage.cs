@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Ulbe
+namespace Ulbe.UI
 {
     public class GUIPage : MonoBehaviour
     {
