@@ -9,7 +9,13 @@ namespace Emojigame
         public Vector2 CellSize { get; protected set; } = new Vector2(100, 100);
         public Vector2 Offset { get; protected set; }
         public Vector2 Size { get; protected set; }
-
+        static readonly Vector2Int[] dirs = new Vector2Int[]
+        {
+            new Vector2Int(1,0), // left
+            new Vector2Int(-1,0), // right
+            new Vector2Int(0,1), // up
+            new Vector2Int(0,-1) // down
+        };
 
         public CellMap(Vector2 Area, Vector2 Cellsize)
         {
@@ -69,6 +75,7 @@ namespace Emojigame
                     int cnt = 1;
                     bool valid = false;
 
+                    // shift down while the cell below is empty
                     while ((under = GetCell(x, y + cnt)) != null && under.IsEmpty)
                     {
                         valid = true;
@@ -101,7 +108,7 @@ namespace Emojigame
                     {
                         if (!GetCell(i, LengthY - 1).IsEmpty)
                         {
-                            // Move Vertical line to the left
+                            // shift vertical row to the left
                             for (int y = 0; y < LengthY; y++)
                             {
                                 Swap(new Vector2Int(x, y), new Vector2Int(i, y));
@@ -113,37 +120,26 @@ namespace Emojigame
                     }
                 }
             }
-
             return movedCellsX.ToArray();
         }
 
-        public Cell[] GetNeighbours(Cell c)
+        public Cell[] GetNeighbors(Cell c)
         {
             List<Cell> cells = new List<Cell>();
-            Cell temp;
-
-            // right
-            if ((temp = GetCell(c.pos.x + 1, c.pos.y + 0)) != null && temp.SameType(c))
-                cells.Add(temp);
-
-            // left
-            if ((temp = GetCell(c.pos.x - 1, c.pos.y + 0)) != null && temp.SameType(c))
-                cells.Add(temp);
-
-            // Up
-            if ((temp = GetCell(c.pos.x + 0, c.pos.y - 1)) != null && temp.SameType(c))
-                cells.Add(temp);
-
-            // Down
-            if ((temp = GetCell(c.pos.x + 0, c.pos.y + 1)) != null && temp.SameType(c))
-                cells.Add(temp);
-
+            foreach (Vector2Int dir in dirs)
+                if (TryGetNeighbor(c, dir, out Cell temp))
+                    cells.Add(temp);
             return cells.ToArray();
+        }
+
+        bool TryGetNeighbor(Cell origin,Vector2Int dir, out Cell neighbor)
+        {
+            return (neighbor = GetCell(origin.pos.x + dir.x, origin.pos.y + dir.y)) != null && neighbor.SameType(origin);
         }
 
         public bool HasNeighbours(Cell c)
         {
-            return GetNeighbours(c).Length > 0;
+            return GetNeighbors(c).Length > 0;
         }
 
         protected void Swap(Vector2Int a, Vector2Int b)
