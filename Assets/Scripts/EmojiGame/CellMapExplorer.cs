@@ -29,7 +29,7 @@ namespace Emojigame
                     visitedCells.Add(temp);
                 else
                     continue;
-                adjCells = map.GetNeighbours(temp);
+                adjCells = map.GetNeighbors(temp);
                 for (int i = 0; i < adjCells.Length; i++)
                 {
                     if (!visitedCells.Contains(adjCells[i]))
