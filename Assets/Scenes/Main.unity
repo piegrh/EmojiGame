@@ -1788,7 +1788,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Exit
+  m_Text: EXIT
 --- !u!222 &757980865
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -9093,6 +9093,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_FontData.m_MinSize
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3293040724709226172, guid: 91c8885daf4dd8f40808a7c5f6c94dd6,
+        type: 3}
+      propertyPath: m_Text
+      value: START
       objectReference: {fileID: 0}
     - target: {fileID: 3293040726063303944, guid: 91c8885daf4dd8f40808a7c5f6c94dd6,
         type: 3}

@@ -1,9 +1,10 @@
 ﻿using System.Collections.Generic;
-using UnityEngine;
+
 namespace Ulbe
 {
     public class Cvars : UnitySingleton<Cvars>
     {
+        private const string BadName = "BADNAME";
         public Dictionary<string, Cvar> cvarList;
 
         protected override void Awake()
@@ -65,7 +66,7 @@ namespace Ulbe
             Cvar var;
 
             if (!ValidateString(var_name))
-                var_name = "BADNAME";
+                var_name = BadName;
 
             var = Cvar_Find(var_name);
 
@@ -85,8 +86,10 @@ namespace Ulbe
 
             // check if cvar is protected
             if (!force && (var.flags.HasFlag(Cvar.CvarFlags.ROM) || var.flags.HasFlag(Cvar.CvarFlags.INIT) || var.flags.HasFlag(Cvar.CvarFlags.CHEAT)))
+            {
                 if (!Get("devmode", "0").BoolValue)
                     return var;
+            }
 
             // Set values
             var.name = var_name.ToLower();
@@ -99,9 +102,7 @@ namespace Ulbe
 
         public static bool ValidateString(string s)
         {
-            if (s == "" || s.Contains("\\") || s.Contains("\"") || s.Contains(";"))
-                return false;
-            return true;
+            return s == "" || s.Contains("\\") || s.Contains("\"") || s.Contains(";") ? false : true;
         }
 
         public Cvar Cvar_Find(string var_name)

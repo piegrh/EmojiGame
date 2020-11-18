@@ -79,6 +79,11 @@ namespace Emojigame
             img.GetComponent<RectTransform>().sizeDelta = _transform.sizeDelta - padding;
         }
 
+        public void Move(Vector3 pos, float speed = 1000f)
+        {
+            SetPosition(Vector3.MoveTowards(RectTransofrm.localPosition, pos, speed * Time.fixedDeltaTime));
+        }
+
         public RectTransform RectTransofrm { get { return _transform; } }
     }
 }
