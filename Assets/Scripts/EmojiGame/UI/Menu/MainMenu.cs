@@ -18,7 +18,7 @@ namespace Emojigame.UI.Menu
 
             int cnt = -1;
 
-            foreach (CellGameSettings.LevelSize val in System.Enum.GetValues(typeof(CellGameSettings.LevelSize)))
+            foreach (EmojiGameSettings.LevelSize val in System.Enum.GetValues(typeof(EmojiGameSettings.LevelSize)))
             {
                 sizeOpts.Add(new Dropdown.OptionData() { text = val.ToString() });
                 cnt++;
@@ -29,7 +29,7 @@ namespace Emojigame.UI.Menu
 
             cnt = -1;
             List<Dropdown.OptionData> sizeOptsB = new List<Dropdown.OptionData>();
-            foreach (CellGameSettings.Difficulty val in System.Enum.GetValues(typeof(CellGameSettings.Difficulty)))
+            foreach (EmojiGameSettings.Difficulty val in System.Enum.GetValues(typeof(EmojiGameSettings.Difficulty)))
             {
                 sizeOptsB.Add(new Dropdown.OptionData() { text = val.ToString() });
                 cnt++;

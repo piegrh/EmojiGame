@@ -4,7 +4,7 @@ namespace Emojigame
 {
     public class GameEvents : UnitySingleton<GameEvents>
     {
-        public event System.Action<Cell> OnCellClick;
+        public event System.Action<Emoji> OnEmojiClick;
         public event System.Action<int> OnCellSelect;
         public event System.Action<int> OnScore;
         public event System.Action OnReset;
@@ -33,12 +33,12 @@ namespace Emojigame
             OnScore?.Invoke(score);
         }
 
-        public void CellClick(Cell id)
+        public void CellClick(Emoji e)
         {
-            OnCellClick?.Invoke(id);
+            OnEmojiClick?.Invoke(e);
         }
 
-        public void CellSelect(int selectedCnt)
+        public void EmojiSelect(int selectedCnt)
         {
             OnCellSelect?.Invoke(selectedCnt);
         }

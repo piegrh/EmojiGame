@@ -3,9 +3,9 @@ using UnityEngine;
 
 namespace Emojigame
 {
-    public class CellView : MonoBehaviour
+    public class EmojiView : MonoBehaviour
     {
-        public Cell cell;
+        public Emoji emoji;
         public ParticleSystem DeathFX;
         public UnityEngine.UI.Image img;
         protected RectTransform _transform;
@@ -30,14 +30,14 @@ namespace Emojigame
 
         public void OnMouseDown()
         {
-            if (cell.IsEmpty)
+            if (emoji.IsEmpty)
                 return;
-            GameEvents.Instance.CellClick(cell);
+            GameEvents.Instance.CellClick(emoji);
         }
 
         public void Update()
         {
-            if(cell.seleted && !roller.enabled || (!cell.seleted && roller.enabled))
+            if (emoji.seleted && !roller.enabled || (!emoji.seleted && roller.enabled))
                 roller.enabled = !roller.enabled;
         }
 
@@ -54,13 +54,13 @@ namespace Emojigame
         public void Hide()
         {
             img.color = disableColor;
-            cell.cellType = Cell.NONE;
+            emoji.emojiType = Emoji.NONE;
         }
 
         public void Explode()
         {
             Vector3 size = _transform.sizeDelta;
-            ParticleSystem g = Pooler.Instance.Dequeue("explode",_transform.position).GetComponent<ParticleSystem>();
+            ParticleSystem g = Pooler.Instance.Dequeue("explode", _transform.position).GetComponent<ParticleSystem>();
             g.Clear();
             g.Play(true);
             g.transform.position = new Vector3(transform.position.x, transform.position.y, 1);
